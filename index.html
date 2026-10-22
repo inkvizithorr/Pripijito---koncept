@@ -154,10 +154,15 @@ h2{font-size:21px;margin:30px 0 12px}
 #brana h1{font-size:27px;margin-bottom:8px}
 #brana .velke{font-size:54px;font-weight:700;color:var(--pri);line-height:1;margin-bottom:6px}
 #brana .logo{justify-content:center;margin-bottom:10px;color:var(--akc)}
-.pribeh{position:absolute;z-index:1;font-weight:600;color:var(--akc);opacity:.55;white-space:nowrap;animation:plav 7s ease-in-out infinite;pointer-events:none;letter-spacing:.2px}
-.pribeh.sv{opacity:.35;font-weight:500}
-@keyframes plav{50%{transform:translateY(-7px) rotate(var(--r))}}
-.pribeh{transform:rotate(var(--r))}
+#pribehy{position:absolute;left:-30%;top:-18%;width:160%;height:140%;transform:rotate(-8deg);z-index:1;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:20px 0}
+.radek{display:flex;gap:16px;width:max-content;white-space:nowrap;animation:jizda var(--d,60s) linear infinite}
+.radek.zpet{animation-direction:reverse}
+@keyframes jizda{to{transform:translateX(-50%)}}
+.pb{flex:none;padding:9px 18px;border-radius:99px;font-size:15px;font-weight:500;color:var(--akc)}
+.pb.a{background:var(--tep);border:1px solid var(--line)}
+.pb.b{border:1.5px solid rgba(180,75,41,.35);color:var(--pri)}
+.pb.c{font-weight:700;font-size:19px;opacity:.5;padding:9px 6px}
+.pb.d{font-style:italic;opacity:.6;padding:9px 6px}
 .paticka{margin:34px 0 10px;padding:16px;border-radius:18px;background:var(--panel2);border:1px solid var(--line);font-size:12.5px;color:var(--muted)}
 .konfety{position:fixed;top:-12px;width:10px;height:14px;z-index:90;pointer-events:none;animation:pad 1.6s ease-in forwards}
 @keyframes pad{to{transform:translateY(105vh) rotate(540deg);opacity:.8}}
@@ -401,9 +406,11 @@ h2{font-size:21px;margin:30px 0 12px}
       '<p class="drobne" style="text-align:center;margin:0 0 14px">Poplatek je za zobrazení informací. Nevrací se, i když tě hostitel nepřijme.</p>'+
       '<button class="tlac plny" data-zaplaceno="'+id+'">Zaplaceno (ukázka)</button><button class="tlac rameck plny" style="margin-top:10px" data-zavri="1">Zavřít</button>');
   }
-  var PRIBEHY=['Kdo dnes zazvoní?','Margarita, šachy a dva cizinci','Nikdy nevíš, co z toho vyplyne','Jedna sklenice, pět neznámých','Dveře, které se otevřou jen dnes','Přišla jsem sama, odcházela jsem s partou','Piškvorky o poslední doušek','Dneska nechci být sám','Tajemný host s lahví vína','Pozvání, které jsi nečekal','Dlouhá noc, krátká sklenice','Kdo za těmi dveřmi bydlí?','Zkus to. Aspoň jednou.','Cizí lidé, společný stůl','Co když z toho bude parta?','Poslední volné místo'];
-  var POL=[[4,5,-8],[52,3,5],[6,17,6],[58,15,-6],[2,31,-4],[55,29,8],[10,68,-7],[50,72,6],[3,82,5],[48,86,-5],[56,52,-9],[1,50,7],[40,9,-3],[34,92,4],[58,62,-4],[8,41,-10]];
-  (function(){var h='';PRIBEHY.forEach(function(t,i){var q=POL[i];h+='<span class="pribeh'+(i%3===0?' sv':'')+'" style="left:'+q[0]+'%;top:'+q[1]+'%;--r:'+q[2]+'deg;font-size:'+(14+(i*7)%9)+'px;animation-delay:-'+(i%6)+'s">'+t+'</span>'});$('#pribehy').innerHTML=h})();
+  var PRIBEHY='Přišla jsem sama, odcházela jsem s partou|Sousedka mi zazvonila s lahví vína|Myslel jsem, že přijdu na hodinu. Zůstal jsem do rána|Poznali jsme se u margarity, dnes spolu jezdíme na hory|Nikdo nikoho neznal. Za hodinu jsme se smáli jako staří známí|Prohrál jsem v šachách a dostal druhou sklenici|Zazvonil jsem a netušil, co mě čeká|Z jednoho večera se stala každotýdenní tradice|Přinesl jsem víno, odnesl nové přátele|Seděli jsme na balkóně do tří do rána|Cizí byt, společný stůl, dobrá nálada|Koktejl, který ještě nikdo neochutnal|Večer bez telefonů, jen sklenice a lidé|Hudba, svíčky a nečekaná společnost|Piškvorky o poslední doušek|Karty, víno a pár lidí, které neznáš|Soutěž v míchání drinků|Taneční kuchyně o půlnoci|Střešní terasa a západ slunce s cizími lidmi|Společné vaření a dlouhé povídání|Večer, na který budeš vzpomínat|Nikdy nevíš, co z toho vyplyne|Jedna sklenice navíc?|Zazvoň, jestli se odvážíš|Dveře jsou pootevřené|Jen jedna sklenice, říkali|Zvědavost je nejlepší koření večera|Co když dnes potkáš někoho důležitého?|Neříkej ne, dokud nezkusíš|Někdo na tebe čeká za dveřmi|Poslední volné místo|Kdo dnes zazvoní?|Odvaha stojí jen 29 Kč|Pozvání, které jsi nečekal|Mám margaritu a nikoho, kdo by ji pil se mnou|Hledám soupeře na šachy a dobrého posluchače|Dnes vařím a nechci jíst sám|Zvu tři lidi na drink a povídání|Mám vinyly, víno a volnou židli|Hledám partu na deskovky a koktejly|Velký dům, dlouhý stůl, hodně židlí|Chci poznat nové lidi a nové příběhy|Pojď na limonádu, nebo na něco silnějšího|Otevřu láhev, ty přines zvědavost|Nechci být dnes sama, pojď|Mám zahradu, gril a hudbu|Hledám kamarády na dlouhé večery|Dnes večer mám dveře otevřené|Mám Long Island a špatný vtip|Aperol, mojito a Cuba Libre čekají|Cizí lidé jsou přátelé, které jsi ještě nepotkal|Každý večer začíná jedním zazvoněním|Nemusíš nic říkat, stačí přijít|Pár lidí, které bys jinak nikdy nepotkal|Zítra budeš vyprávět, kde jsi byl|Opravdové setkání, ne jen zpráva v telefonu|Příběh začíná jedním drinkem|Dlouhá noc, krátká sklenice|Kdo za těmi dveřmi bydlí?|Zkus to. Aspoň jednou.|Cizí lidé, společný stůl|Co když z toho bude parta?|Dveře, které se otevřou jen dnes|Margarita, šachy a dva cizinci|Jedna sklenice, pět neznámých|Dneska nechci být sám|Tajemný host s lahví vína|Večer plný drobných překvapení|Nemáš s kým jít do baru? Pojď k nám|Barové povídání bez baru|Samota končí u cizích dveří|Nikdo tě nesoudí, jen ti dolije|Víno chladí, hudba hraje, židle čeká|Přijď jako cizinec, odejdi jako přítel|Pozvání platí jen dnes večer|Někdo ti nechal rozsvíceno|Z náhody se rodí ty nejlepší večery|Tajemství bývá chutnější než víno|Stačí jedno klepnutí na zvonek'.split('|');
+  (function(){var R=8,n=PRIBEHY.length,td=['a','b','c','d'],h='';
+    for(var r=0;r<R;r++){var c='';for(var k=r;k<n;k+=R){c+='<span class="pb '+td[(k*7+r)%4]+'">'+PRIBEHY[k]+'</span>'}
+      h+='<div class="radek'+(r%2?' zpet':'')+'" style="--d:'+(70+((r*13)%40))+'s">'+c+c+'</div>'}
+    $('#pribehy').innerHTML=h})();
   var STR=['uvod','nabidky','pozvat','moje','profil'];
   function otevriMenu(){$('#sidebar').classList.add('on');$('#zavesa').classList.add('on')}
   function zavriMenu(){$('#sidebar').classList.remove('on');$('#zavesa').classList.remove('on')}
