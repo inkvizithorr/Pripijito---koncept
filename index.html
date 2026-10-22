@@ -1,134 +1,446 @@
-<!doctype html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Pripijito - koncept</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
-<style>body{margin:0;background:#e9e2d9;display:flex;justify-content:center}section{display:none}section:target,#uvod{display:block}#uvod:has(~section:target){display:none}section>div{width:100%!important;max-width:390px;margin:0 auto;min-height:100vh;height:auto!important}</style></head><body>
-<section id="uvod"><div style="width:390px;height:900px;box-sizing:border-box;background:#fcfbfa;color:#2d231e;font-family:Poppins,sans-serif;display:flex;flex-direction:column;overflow:hidden">
-<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:#8a3617;color:#fff">
-<div style="font-weight:600;font-size:20px">Pripijito</div>
-<div style="font-size:13px">Přepnout na Papanito</div>
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#8a3617">
+<title>Pripijito - koncept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#fcfbfa;--panel:#ffffff;--panel2:#faf7f2;--tep:#fff3ec;--line:#e2d9cd;
+  --text:#2d231e;--muted:#665c54;--pri:#b44b29;--pri-h:#9e3f1f;--akc:#8a3617;--ok:#2f7d4f;
+  --stin:0 6px 24px rgba(138,54,23,.10);--stin2:0 14px 40px rgba(138,54,23,.18);
+}
+:root[data-motiv='tmavy']{
+  --bg:#17110e;--panel:#221a16;--panel2:#1d1612;--tep:#2c1d16;--line:#3a2d26;
+  --text:#f4ece6;--muted:#b9aca2;--pri:#e0734b;--pri-h:#ee8a64;--akc:#f0a283;
+  --stin:0 6px 24px rgba(0,0,0,.35);--stin2:0 14px 40px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,system-ui,sans-serif;line-height:1.5;
+  padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+.wrap{max-width:560px;margin:0 auto;padding:0 18px}
+header{position:sticky;top:0;z-index:30;background:linear-gradient(120deg,#8a3617,#b44b29);color:#fff;
+  padding-top:env(safe-area-inset-top)}
+.hl{display:flex;align-items:center;justify-content:space-between;height:60px;max-width:560px;margin:0 auto;padding:0 12px 0 18px}
+.logo{font-weight:700;font-size:22px;letter-spacing:.2px;display:flex;align-items:center;gap:8px}
+.logo svg{width:26px;height:26px}
+.hl-btn{width:44px;height:44px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;transition:background .2s}
+.hl-btn:hover,.hl-btn:active{background:rgba(255,255,255,.18)}
+.hl-btn svg{width:24px;height:24px}
+.zavesa{position:fixed;inset:0;background:rgba(20,10,5,.5);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}
+.zavesa.on{opacity:1;pointer-events:auto}
+.sidebar{position:fixed;top:0;right:0;bottom:0;width:min(320px,86vw);background:var(--panel);z-index:50;
+  transform:translateX(105%);transition:transform .3s cubic-bezier(.2,.8,.2,1);padding:20px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--stin2)}
+.sidebar.on{transform:none}
+.sidebar h3{margin:4px 0 12px;font-size:18px}
+.mi{display:flex;align-items:center;gap:14px;min-height:50px;padding:0 14px;border-radius:14px;font-weight:500;transition:background .2s,transform .15s;width:100%;text-align:left}
+.mi:hover{background:var(--tep)}.mi:active{transform:scale(.98)}
+.mi svg{width:22px;height:22px;stroke:var(--akc);flex:none}
+.mi.papa{margin-top:auto;background:var(--tep);color:var(--akc);font-weight:600}
+nav.tab{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--panel);border-top:1px solid var(--line);
+  display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom)}
+nav.tab .in{display:flex;width:100%;max-width:560px}
+nav.tab a{flex:1;min-height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  font-size:11px;color:var(--muted);position:relative;transition:color .2s}
+nav.tab a svg{width:24px;height:24px;transition:transform .2s}
+nav.tab a.on{color:var(--pri);font-weight:600}
+nav.tab a.on svg{transform:translateY(-2px) scale(1.1)}
+nav.tab a.on::before{content:'';position:absolute;top:0;width:34px;height:3px;border-radius:0 0 3px 3px;background:var(--pri)}
+.strana{display:none;animation:vstup .4s ease both}.strana.on{display:block}
+@keyframes vstup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h1{font-size:30px;line-height:1.2;margin:0 0 10px}
+h2{font-size:21px;margin:30px 0 12px}
+.drobne{font-size:13px;color:var(--muted)}
+.hero{margin:0 -18px;padding:34px 18px 54px;background:linear-gradient(160deg,#8a3617 0%,#b44b29 55%,#d9774f 100%);color:#fff;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.1)}
+.hero::before{content:'';position:absolute;left:-40px;bottom:-80px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.08)}
+.hero h1{font-size:34px;position:relative;z-index:1}
+.hero p{margin:0 0 20px;font-size:15.5px;opacity:.95;position:relative;z-index:1}
+.stitek{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;background:rgba(255,255,255,.18);font-size:12.5px;font-weight:500;margin-bottom:14px;position:relative;z-index:1}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 24px;border-radius:99px;font-weight:600;font-size:15.5px;
+  background:#fff;color:#8a3617;box-shadow:0 8px 20px rgba(0,0,0,.18);transition:transform .15s,box-shadow .2s;position:relative;z-index:1}
+.cta:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(0,0,0,.24)}.cta:active{transform:scale(.97)}
+.tlac{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 24px;border-radius:99px;font-weight:600;font-size:15.5px;
+  background:var(--pri);color:#fff;box-shadow:0 8px 18px rgba(180,75,41,.35);transition:transform .15s,background .2s}
+.tlac:hover{background:var(--pri-h)}.tlac:active{transform:scale(.97)}
+.tlac.plny{width:100%}
+.tlac.rameck{background:transparent;color:var(--akc);box-shadow:none;border:1.5px solid var(--pri)}
+.tlac[disabled]{opacity:.55;pointer-events:none}
+.dlazdice{display:grid;gap:14px;margin-top:-30px;position:relative;z-index:2}
+.dl{display:flex;align-items:center;gap:18px;min-height:128px;padding:0 20px;border-radius:24px;background:var(--panel);border:1px solid var(--line);
+  box-shadow:var(--stin);transition:transform .2s,box-shadow .2s;text-align:left;width:100%}
+.dl:hover{transform:translateY(-3px);box-shadow:var(--stin2)}.dl:active{transform:scale(.985)}
+.dl svg{width:64px;height:64px;stroke:var(--akc);flex:none}
+.dl b{display:block;font-size:19px}.dl span{font-size:13px;color:var(--muted)}
+.kroky{display:grid;gap:12px}
+.krok{display:flex;gap:14px;padding:16px;border-radius:20px;background:var(--panel2);border:1px solid var(--line)}
+.krok i{flex:none;width:38px;height:38px;border-radius:50%;background:var(--pri);color:#fff;font-style:normal;font-weight:700;display:flex;align-items:center;justify-content:center}
+.krok b{display:block}.krok span{font-size:13.5px;color:var(--muted)}
+.scenare{display:grid;gap:14px}
+.scn{padding:18px;border-radius:22px;border:1px solid var(--line);background:var(--panel);box-shadow:var(--stin);position:relative;overflow:hidden;transition:transform .2s}
+.scn:hover{transform:translateY(-3px)}
+.scn .em{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;background:var(--tep)}
+.scn .em svg{width:26px;height:26px;stroke:var(--akc)}
+.scn h3{margin:0 0 4px;font-size:17px}
+.scn p{margin:0 0 10px;font-size:13.5px;color:var(--muted)}
+.scn .pr{font-size:12.5px;padding:10px 12px;border-radius:12px;background:var(--tep);color:var(--akc)}
+.scn button{margin-top:12px;font-weight:600;font-size:13.5px;color:var(--pri);min-height:44px;padding:0}
+.filtr{display:flex;gap:8px;overflow-x:auto;padding:4px 18px 10px;margin:0 -18px;scrollbar-width:none}
+.filtr::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:44px;padding:0 18px;border-radius:99px;border:1.5px solid var(--line);background:var(--panel);font-size:14px;font-weight:500;transition:all .2s}
+.chip.on{background:var(--akc);color:#fff;border-color:var(--akc);transform:scale(1.03)}
+:root[data-motiv='tmavy'] .chip.on{background:var(--pri)}
+.karty{display:grid;gap:16px}
+.karta{padding:18px;border-radius:24px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--stin);transition:transform .2s,box-shadow .2s;animation:vstup .4s ease both}
+.karta:hover{transform:translateY(-3px);box-shadow:var(--stin2)}
+.kh{display:flex;gap:14px;align-items:center}
+.avatar{flex:none;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:#fff}
+.karta.zam .avatar{filter:blur(5px)}
+.kh b{font-size:16.5px}.kh small{display:block;color:var(--muted);font-size:12.5px}
+.stav{margin-left:auto;font-size:11.5px;padding:5px 10px;border-radius:99px;background:var(--tep);color:var(--akc);font-weight:600;white-space:nowrap}
+.karta p{margin:12px 0 10px;font-size:14.5px}
+.tagy{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tag{font-size:12px;padding:5px 11px;border-radius:99px;background:var(--panel2);border:1px solid var(--line);color:var(--muted)}
+.tag.ak{background:var(--tep);color:var(--akc);border-color:transparent}
+.skryte{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:14px;background:var(--panel2);border:1px dashed var(--line);font-size:12.5px;color:var(--muted);margin-bottom:12px}
+.skryte svg{width:20px;height:20px;stroke:var(--akc);flex:none}
+.odem{padding:14px;border-radius:16px;background:var(--tep);margin-bottom:12px;font-size:14px;display:grid;gap:4px}
+.odem b{color:var(--akc)}
+.prazdno{padding:34px 18px;text-align:center;color:var(--muted);border:1.5px dashed var(--line);border-radius:22px}
+.pole{margin-bottom:16px}
+.pole label{display:block;font-size:13.5px;font-weight:600;margin-bottom:6px}
+.pole input:not([type=range]):not([type=checkbox]),.pole textarea,.pole select{width:100%;min-height:48px;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);
+  background:var(--panel);color:var(--text);font:inherit;font-size:15px;transition:border-color .2s,box-shadow .2s}
+.pole textarea{min-height:96px;resize:vertical}
+.pole input:focus,.pole textarea:focus,.pole select:focus{outline:0;border-color:var(--pri);box-shadow:0 0 0 4px rgba(180,75,41,.15)}
+.pole input[type=range]{width:100%;accent-color:var(--pri);height:44px}
+.dva{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pocet{font-weight:700;color:var(--pri);font-size:20px}
+.souhlas{display:flex;gap:12px;align-items:flex-start;font-size:13.5px;margin:6px 0 16px}
+.souhlas input{width:24px;height:24px;flex:none;accent-color:var(--pri);margin-top:2px}
+.nahled{margin:20px 0}
+.nahled>small{display:block;margin-bottom:8px;color:var(--muted);font-size:12.5px;font-weight:500}
+.over{display:grid;gap:12px}
+.ov{display:flex;gap:14px;align-items:center;padding:16px;border-radius:20px;border:1px solid var(--line);background:var(--panel)}
+.ov .k{flex:none;width:40px;height:40px;border-radius:50%;background:var(--panel2);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted)}
+.ov.hotovo .k{background:var(--ok);color:#fff}
+.ov b{display:block}.ov span{font-size:13px;color:var(--muted)}
+.modal{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;pointer-events:none}
+.modal .zav{position:absolute;inset:0;background:rgba(20,10,5,.55);opacity:0;transition:opacity .25s}
+.modal .list{position:relative;width:100%;max-width:560px;background:var(--panel);border-radius:28px 28px 0 0;padding:22px 20px calc(24px + env(safe-area-inset-bottom));
+  transform:translateY(105%);transition:transform .35s cubic-bezier(.2,.8,.2,1);max-height:92vh;overflow:auto}
+.modal.on{pointer-events:auto}.modal.on .zav{opacity:1}.modal.on .list{transform:none}
+.modal .tah{width:44px;height:5px;border-radius:5px;background:var(--line);margin:0 auto 14px}
+.modal h3{margin:0 0 6px;font-size:21px}
+.cena{font-size:44px;font-weight:700;color:var(--akc);text-align:center;margin:6px 0}
+.qr{display:block;margin:12px auto;width:210px;height:210px;padding:12px;background:#fff;border-radius:20px;border:1px solid var(--line);animation:dych 2.4s ease-in-out infinite}
+@keyframes dych{50%{transform:scale(1.03)}}
+.cekani{display:flex;align-items:center;justify-content:center;gap:10px;font-size:13.5px;color:var(--muted);margin:6px 0 14px}
+.tecka{width:10px;height:10px;border-radius:50%;background:var(--pri);animation:blik 1s infinite}
+@keyframes blik{50%{opacity:.25}}
+#toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translate(-50%,30px);background:#2d231e;color:#fff;padding:13px 20px;border-radius:99px;
+  font-size:14px;z-index:80;opacity:0;pointer-events:none;transition:all .3s;max-width:90vw;text-align:center;box-shadow:var(--stin2)}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+#brana{position:fixed;inset:0;z-index:100;background:linear-gradient(160deg,#6f2a11,#b44b29);color:#fff;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center}
+#brana.skryt{display:none}
+#brana .k{max-width:380px}
+#brana h1{font-size:32px}
+#brana .velke{font-size:64px;font-weight:700;opacity:.95;margin-bottom:6px}
+.paticka{margin:34px 0 10px;padding:16px;border-radius:18px;background:var(--panel2);border:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.konfety{position:fixed;top:-12px;width:10px;height:14px;z-index:90;pointer-events:none;animation:pad 1.6s ease-in forwards}
+@keyframes pad{to{transform:translateY(105vh) rotate(540deg);opacity:.8}}
+@media(min-width:760px){.karty,.scenare{grid-template-columns:1fr 1fr}.wrap,.hl,nav.tab .in{max-width:900px}.dlazdice{grid-template-columns:repeat(3,1fr)}.dl{flex-direction:column;justify-content:center;text-align:center;padding:20px 12px;min-height:200px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div id="brana">
+  <div class="k">
+    <div class="velke">18+</div>
+    <h1>Pripijito je jen pro dospělé</h1>
+    <p style="opacity:.92;margin:0 0 22px">Setkání u lidí doma jsou určená osobám starším 18 let. Při skutečném provozu ověříme věk dokladem. Tohle je jen ukázka konceptu.</p>
+    <button class="cta" id="brana-ano">Je mi 18 nebo víc</button>
+    <p class="drobne" style="color:#fff;opacity:.8;margin-top:16px">Mladším než 18 let vstup nedovolujeme.</p>
+  </div>
 </div>
-<div style="padding:24px 20px 8px">
-<h1 style="margin:0;font-size:26px;line-height:1.25">Dnes večer u někoho doma</h1>
-<p style="margin:8px 0 0;font-size:14px;color:#665c54;line-height:1.5">Pár lidí, film, hudba, dobré pití. Jen pro dospělé, 18+.</p>
+
+<header>
+  <div class="hl">
+    <a class="logo" href="#uvod" aria-label="Pripijito, úvod">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14l-6 8v7h4M5 4l6 8v7H7"/></svg>
+      Pripijito
+    </a>
+    <button class="hl-btn" id="menu-btn" aria-label="Otevřít menu"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+
+<div class="zavesa" id="zavesa"></div>
+<aside class="sidebar" id="sidebar" aria-label="Menu">
+  <h3>Menu</h3>
+  <a class="mi" href="#uvod"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>Úvod</a>
+  <a class="mi" href="#nabidky"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>Hledám společnost</a>
+  <a class="mi" href="#pozvat"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Pozvat k sobě</a>
+  <a class="mi" href="#moje"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Moje večery</a>
+  <a class="mi" href="#profil"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Profil a ověření</a>
+  <button class="mi" id="motiv"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg><span id="motiv-t">Tmavý režim</span></button>
+  <a class="mi papa" href="#" id="papa"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v6a5 5 0 0 1-10 0z"/><path d="M5 7h14"/></svg>Přepnout na Papanito</a>
+</aside>
+
+<main class="wrap">
+
+<section class="strana on" id="uvod" data-strana>
+  <div class="hero">
+    <span class="stitek">✦ Dnes večer · jen 18+</span>
+    <h1>Večer, který si pamatuješ</h1>
+    <p>Pozvi pár lidí k sobě domů, nebo se nech pozvat. Dobré drinky, chutné pochutiny, film, hudba a příjemná společnost. Jen pro dospělé.</p>
+    <a class="cta" href="#nabidky">Najít večer →</a>
+  </div>
+  <div class="dlazdice">
+    <a class="dl" href="#nabidky">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <div><b>Hledám společnost</b><span>Večery dnes a zítra u lidí doma</span></div>
+    </a>
+    <a class="dl" href="#pozvat">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-7h6v7"/></svg>
+      <div><b>Pozvat k sobě</b><span>Napiš o sobě a co připravíš</span></div>
+    </a>
+    <a class="dl" href="#moje">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+      <div><b>Moje večery</b><span>Pozvánky, schválení a odemčení</span></div>
+    </a>
+  </div>
+
+  <h2>Jak to funguje</h2>
+  <div class="kroky">
+    <div class="krok"><i>1</i><div><b>Uvidíš nabídku</b><span>Text a popis, co hostitel chystá. Fotka, místo a kontakt jsou zatím skryté.</span></div></div>
+    <div class="krok"><i>2</i><div><b>Odemkneš za 29&nbsp;Kč</b><span>Zaplatíš QR kódem. Ukážeme ti fotku, místo a telefon a můžeš poslat pozvánku.</span></div></div>
+    <div class="krok"><i>3</i><div><b>Hostitel rozhodne</b><span>Přijme, koho chce. Pak si domluvíte čas a už se jen těšíš.</span></div></div>
+  </div>
+
+  <h2>Jaký večer tě láká?</h2>
+  <p class="drobne" style="margin-top:-6px">Každý večer je jiný. Hostitel v popisu napíše, co chystá a koho hledá.</p>
+  <div class="scenare" id="scenare"></div>
+
+  <div class="paticka"><b>Jak to držíme bezpečné:</b> jen 18+, ověřený profil s fotkou, hostitel schvaluje každého, nahlášení a tlačítko Chci odejít. Pripijito je jen zprostředkování, večer i jeho průběh jsou na domluvě lidí.</div>
+</section>
+
+<section class="strana" id="nabidky" data-strana>
+  <h1 style="margin-top:22px">Hledám společnost</h1>
+  <p class="drobne" style="margin-top:-4px">Vidíš jen text. Fotku, místo a telefon odemkneš za 29&nbsp;Kč.</p>
+  <div class="filtr" id="filtr"></div>
+  <div class="karty" id="karty"></div>
+</section>
+
+<section class="strana" id="pozvat" data-strana>
+  <h1 style="margin-top:22px">Pozvat k sobě</h1>
+  <p class="drobne" style="margin-top:-4px">Napiš pár vět, co chystáš. Dole vidíš, jak to uvidí ostatní.</p>
+  <form id="forma" novalidate style="margin-top:18px">
+    <div class="pole"><label for="f-jmeno">Jak ti říkat</label><input id="f-jmeno" value="Verča" maxlength="24"></div>
+    <div class="dva">
+      <div class="pole"><label for="f-vek">Věk</label><input id="f-vek" type="number" min="18" max="99" value="28" inputmode="numeric"></div>
+      <div class="pole"><label for="f-mesto">Město</label><input id="f-mesto" value="Praha 3" maxlength="24"></div>
+    </div>
+    <div class="pole"><label>Jaký to bude večer</label><div class="filtr" id="f-scn" style="margin:0;padding:0"></div></div>
+    <div class="pole"><label for="f-popis">O tobě a o večeru</label>
+      <textarea id="f-popis" maxlength="300">Sháním dnes na večer pár lidí. Pustíme si film a hudbu, udělám margaritu a další drinky a něco malého k zakousnutí.</textarea></div>
+    <div class="pole"><label for="f-drinky">Co připravíš (pití i jídlo)</label><input id="f-drinky" value="margarita, limonády, sýrové jednohubky" maxlength="80"></div>
+    <div class="dva">
+      <div class="pole"><label for="f-kdy">Kdy</label>
+        <select id="f-kdy"><option>Dnes v 17:00</option><option>Dnes ve 20:00</option><option>Zítra v 19:00</option><option>V sobotu ve 20:00</option></select></div>
+      <div class="pole"><label for="f-mista">Kolik hostů: <span class="pocet" id="f-mista-v">3</span></label>
+        <input id="f-mista" type="range" min="1" max="50" value="3"></div>
+    </div>
+    <label class="souhlas"><input type="checkbox" id="f-ok"><span>Je mi víc než 18 let a každého hosta si schválím sám.</span></label>
+    <div class="nahled"><small>Takhle to uvidí ostatní:</small><div id="nahled"></div></div>
+    <button class="tlac plny" id="f-odeslat" type="submit">Zveřejnit pozvání</button>
+  </form>
+</section>
+
+<section class="strana" id="moje" data-strana>
+  <h1 style="margin-top:22px">Moje večery</h1>
+  <p class="drobne" style="margin-top:-4px">Odemčené nabídky a tvoje pozvánky na jednom místě.</p>
+  <h2 style="margin-top:18px">Odemčeno</h2>
+  <div class="karty" id="m-odem"></div>
+  <h2>Moje pozvání</h2>
+  <div class="karty" id="m-moje"></div>
+</section>
+
+<section class="strana" id="profil" data-strana>
+  <h1 style="margin-top:22px">Profil a ověření</h1>
+  <p class="drobne" style="margin-top:-4px">Ověřený profil je pro hosty i hostitele jistota. Doklad nikde neukládáme.</p>
+  <div class="over" id="over" style="margin-top:16px"></div>
+  <div class="paticka">Po kontrole se doklad i fotka smažou. Zůstane jen záznam, že ověření proběhlo (18+). To je důležité pro to, aby se tu cítil dobře každý.</div>
+</section>
+
+</main>
+
+<nav class="tab" aria-label="Hlavní navigace"><div class="in">
+  <a href="#uvod" data-t="uvod"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>Úvod</a>
+  <a href="#nabidky" data-t="nabidky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>Nabídky</a>
+  <a href="#pozvat" data-t="pozvat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Pozvat</a>
+  <a href="#moje" data-t="moje"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Večery</a>
+  <a href="#profil" data-t="profil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Profil</a>
+</div></nav>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="zav" id="modal-zav"></div>
+  <div class="list" role="dialog" aria-modal="true" aria-labelledby="modal-n">
+    <div class="tah"></div>
+    <div id="modal-obsah"></div>
+  </div>
 </div>
-<div style="padding:12px 20px;display:flex;flex-direction:column;gap:14px;flex:1">
-<a href="#nabidky" style="display:flex;align-items:center;gap:18px;padding:0 20px;min-height:150px;border-radius:20px;background:#fff3ec;border:1px solid #e2d9cd;text-decoration:none;color:inherit">
-<svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#8a3617" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
-<div><div style="font-weight:600;font-size:20px">Hledám společnost</div><div style="font-size:13px;color:#665c54;margin-top:4px">Nabídky večerů dnes a zítra</div></div>
-</a>
-<a href="#pozvat" style="display:flex;align-items:center;gap:18px;padding:0 20px;min-height:150px;border-radius:20px;background:#fff3ec;border:1px solid #e2d9cd;text-decoration:none;color:inherit">
-<svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#8a3617" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-7h6v7"/></svg>
-<div><div style="font-weight:600;font-size:20px">Pozvat k sobě</div><div style="font-size:13px;color:#665c54;margin-top:4px">Napiš o sobě a co připravíš</div></div>
-</a>
-<div style="display:flex;align-items:center;gap:18px;padding:0 20px;min-height:150px;border-radius:20px;background:#fff3ec;border:1px solid #e2d9cd">
-<svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#8a3617" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
-<div><div style="font-weight:600;font-size:20px">Moje večery</div><div style="font-size:13px;color:#665c54;margin-top:4px">Pozvaní a schválení lidé</div></div>
-</div>
-</div>
-<div style="display:flex;border-top:1px solid #e2d9cd;background:#fff">
-<div style="flex:1;min-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;color:#8a3617;font-weight:600">Úvod</div>
-<div style="flex:1;min-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;color:#665c54">Nabídky</div>
-<div style="flex:1;min-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;color:#665c54">Zprávy</div>
-<div style="flex:1;min-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;color:#665c54">Profil</div>
-</div>
-</div></section>
-<section id="nabidky"><div style="width:390px;height:900px;box-sizing:border-box;background:#fcfbfa;color:#2d231e;font-family:Poppins,sans-serif;display:flex;flex-direction:column;overflow:hidden">
-<div style="display:flex;align-items:center;gap:8px;padding:6px 12px;background:#8a3617;color:#fff">
-<a href="#uvod" aria-label="Zpět" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:#fff;font-size:22px;text-decoration:none">&#8592;</a>
-<div style="font-weight:600;font-size:17px">Hledám společnost</div>
-</div>
-<div style="padding:18px 20px 8px;font-size:13px;color:#665c54;line-height:1.5">Vidíš jen text nabídky. Fotku, místo a kontakt ukážeme po zaplacení 29&nbsp;Kč.</div>
-<div style="padding:8px 20px;display:flex;flex-direction:column;gap:14px;flex:1">
-<div style="padding:16px;border:1px solid #e2d9cd;border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:10px">
-<div style="font-weight:600;font-size:15px">Verča, 28</div>
-<p style="margin:0;font-size:14px;line-height:1.5">Sháním pro sebe dnes na večer 3 společníky: jednu holku a dva kluky. Nabízím hezký večer, pustíme si film a hudbu, udělám margaritu a podobné drinky a lehké občerstvení, třeba sýrové jednohubky.</p>
-<div style="display:flex;gap:8px;flex-wrap:wrap">
-<span style="padding:6px 12px;border-radius:16px;background:#fff3ec;font-size:12px;color:#8a3617">Dnes večer</span>
-<span style="padding:6px 12px;border-radius:16px;background:#fff3ec;font-size:12px;color:#8a3617">Volná místa: 3</span>
-</div>
-<div style="display:flex;gap:10px;align-items:center;padding:10px;border-radius:12px;background:#faf7f2">
-<div style="width:48px;height:48px;border-radius:10px;background:#e2d9cd;flex:none"></div>
-<div style="flex:1;font-size:12px;color:#665c54">Fotka, místo a telefon jsou skryté</div>
-</div>
-<a href="#platba" style="display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:24px;background:#b44b29;color:#fff;font-weight:600;font-size:15px;text-decoration:none">Zobrazit za 29&nbsp;Kč</a>
-</div>
-<div style="padding:16px;border:1px solid #e2d9cd;border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:8px;opacity:.9">
-<div style="font-weight:600;font-size:15px">Jakub, 31</div>
-<p style="margin:0;font-size:14px;line-height:1.5">Dnes v&nbsp;17:00 koktejly a společný film. Rád poznám nové lidi.</p>
-<div style="font-size:12px;color:#8a3617">Zobrazit za 29&nbsp;Kč</div>
-</div>
-</div>
-<div style="display:flex;border-top:1px solid #e2d9cd;background:#fff">
-<div style="flex:1;min-height:60px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#665c54">Úvod</div>
-<div style="flex:1;min-height:60px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#8a3617;font-weight:600">Nabídky</div>
-<div style="flex:1;min-height:60px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#665c54">Zprávy</div>
-<div style="flex:1;min-height:60px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#665c54">Profil</div>
-</div>
-</div></section>
-<section id="pozvat"><div style="width:390px;height:900px;box-sizing:border-box;background:#fcfbfa;color:#2d231e;font-family:Poppins,sans-serif;display:flex;flex-direction:column;overflow:hidden">
-<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #e2d9cd">
-<a href="#uvod" aria-label="Zpět" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:#8a3617;font-size:22px;text-decoration:none">&#8592;</a>
-<div style="font-weight:600;font-size:16px">Pozvat k sobě</div>
-</div>
-<div style="padding:20px;display:flex;flex-direction:column;gap:16px">
-<div>
-<label for="o" style="font-size:13px;font-weight:600">Něco o tobě</label>
-<div id="o" style="margin-top:6px;min-height:84px;box-sizing:border-box;padding:12px;border:1px solid #e2d9cd;border-radius:12px;background:#fff;font-size:14px;color:#665c54">Jsem doma sám a mám chuť na příjemnou společnost...</div>
-</div>
-<div>
-<label for="d" style="font-size:13px;font-weight:600">Co připravíš</label>
-<div id="d" style="margin-top:6px;min-height:60px;box-sizing:border-box;padding:12px;border:1px solid #e2d9cd;border-radius:12px;background:#fff;font-size:14px;color:#665c54">Sex on the Beach, Long Island Iced Tea, něco nealko</div>
-</div>
-<div style="display:flex;gap:12px">
-<div style="flex:1"><div style="font-size:13px;font-weight:600">Kdy</div><div style="margin-top:6px;padding:12px;border:1px solid #e2d9cd;border-radius:12px;background:#fff;font-size:14px">Dnes, 17:00</div></div>
-<div style="flex:1"><div style="font-size:13px;font-weight:600">Kolik hostů</div><div style="margin-top:6px;padding:12px;border:1px solid #e2d9cd;border-radius:12px;background:#fff;font-size:14px">1 až 5</div></div>
-</div>
-<div style="padding:14px;border:1px dashed #b44b29;border-radius:14px;background:#fff3ec;font-size:13px;line-height:1.5">
-<b>Fotka je povinná.</b> Bez skutečné fotky obličeje a ověření, že ti je 18, pozvání nejde zveřejnit.
-</div>
-<div style="display:flex;flex-direction:column;gap:10px">
-<div style="font-size:13px;font-weight:600">Zobrazit zájemcům</div>
-<div style="display:flex;gap:10px;align-items:center;min-height:44px;font-size:14px"><span style="width:22px;height:22px;border-radius:50%;border:2px solid #b44b29;display:inline-block;background:radial-gradient(#b44b29 45%,#fff 50%)"></span>Obvyklé pozvání: hosté vidí mou fotku a popis</div>
-<div style="display:flex;gap:10px;align-items:center;min-height:44px;font-size:14px;color:#665c54"><span style="width:22px;height:22px;border-radius:50%;border:2px solid #e2d9cd;display:inline-block"></span>Překvapení: jen popis, fotku vidí až schválení (později)</div>
-</div>
-</div>
-<div style="margin-top:auto;padding:16px 20px;border-top:1px solid #e2d9cd;background:#fff">
-<div style="display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:24px;background:#b44b29;color:#fff;font-weight:600;font-size:15px">Zveřejnit pozvání</div>
-<div style="margin-top:8px;font-size:12px;color:#665c54;text-align:center">Každého hosta si schvaluješ sám. Odmítnout můžeš kohokoli.</div>
-</div>
-</div></section>
-<section id="platba"><div style="width:390px;height:900px;box-sizing:border-box;background:#fcfbfa;color:#2d231e;font-family:Poppins,sans-serif;display:flex;flex-direction:column;overflow:hidden">
-<div style="display:flex;align-items:center;gap:8px;padding:6px 12px;background:#8a3617;color:#fff">
-<a href="#nabidky" aria-label="Zpět" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:#fff;font-size:22px;text-decoration:none">&#8592;</a>
-<div style="font-weight:600;font-size:17px">Zobrazit informace</div>
-</div>
-<div style="padding:24px 20px;display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center">
-<div style="font-size:14px;color:#665c54;line-height:1.5">Naskenuj QR kód v&nbsp;bankovní aplikaci. Po přijetí platby ti ukážeme fotku, místo a kontakt.</div>
-<div style="font-weight:600;font-size:32px">29&nbsp;Kč</div>
-<div style="width:220px;height:220px;border-radius:16px;background:#fff;border:1px solid #e2d9cd;display:flex;align-items:center;justify-content:center;color:#665c54;font-size:13px">QR kód platby</div>
-<div style="font-size:12px;color:#665c54;line-height:1.5">Poplatek je za zobrazení informací o&nbsp;nabídce. Nevrací se, i&nbsp;když tě hostitel nepřijme.</div>
-</div>
-<div style="margin-top:auto;padding:16px 20px;border-top:1px solid #e2d9cd;background:#fff">
-<a href="#odemceno" style="display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:24px;background:#b44b29;color:#fff;font-weight:600;font-size:15px;text-decoration:none">Zaplaceno (ukázka)</a>
-</div>
-</div></section>
-<section id="odemceno"><div style="width:390px;height:900px;box-sizing:border-box;background:#fcfbfa;color:#2d231e;font-family:Poppins,sans-serif;display:flex;flex-direction:column;overflow:hidden">
-<div style="display:flex;align-items:center;gap:8px;padding:6px 12px;background:#8a3617;color:#fff">
-<a href="#nabidky" aria-label="Zpět" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:#fff;font-size:22px;text-decoration:none">&#8592;</a>
-<div style="font-weight:600;font-size:17px">Verča, 28</div>
-</div>
-<div style="height:200px;background:#f1d9cb;display:flex;align-items:center;justify-content:center;color:#8a3617;font-size:14px">fotka hostitelky</div>
-<div style="padding:20px;display:flex;flex-direction:column;gap:14px;flex:1">
-<div style="padding:12px 16px;border-radius:14px;background:#fff3ec;font-size:13px;color:#8a3617">Odemčeno za 29&nbsp;Kč</div>
-<div style="padding:16px;border:1px solid #e2d9cd;border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:4px">
-<div style="font-size:12px;color:#665c54">Místo</div>
-<div style="font-size:15px;font-weight:600">Praha 3, přesnou adresu pošle po pozvání</div>
-<div style="font-size:12px;color:#665c54;margin-top:8px">Telefon</div>
-<div style="font-size:15px;font-weight:600">+420 ••• ••• •••</div>
-</div>
-<div style="font-size:13px;color:#665c54;line-height:1.5">Pošli pozvánku. Verča si vybere, koho přijme. Na odchod a nahlášení je dole vždy tlačítko.</div>
-<div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
-<div style="display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:24px;background:#b44b29;color:#fff;font-weight:600;font-size:15px">Poslat pozvánku</div>
-<div style="display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:22px;border:1px solid #e2d9cd;color:#665c54;font-size:14px">Nahlásit / blokovat</div>
-</div>
-</div>
-</div></section></body></html>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  'use strict';
+  var SCN = {
+    seznameni:{n:'Seznámení',t:'Klidné povídání u dobrého pití. Poznáš nové lidi a uvidíš, jestli si sednete.',p:'Příklad: Doma sám a mám chuť na společnost. Zvu 2 až 3 lidi na drink a povídání.',i:'<path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>'},
+    film:{n:'Film a mazlení',t:'Gauč, deka, film a blízkost. Hodí se pro páry, dvojice i nové známé, kteří chtějí něco jemného.',p:'Příklad: Pustíme film, udělám margaritu a sýrové jednohubky. Hledám holku a dva kluky na hezký večer.',i:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/>'},
+    koktejly:{n:'Koktejly a hudba',t:'Hosté i hostitel si užijí společné míchání drinků a dobrou hudbu. Pití může být i bez alkoholu.',p:'Příklad: Sex on the Beach, Long Island Iced Tea a limonády. Hraje playlist, kdo chce, tancuje.',i:'<path d="M5 4h14l-6 8v7h4M5 4l6 8v7H7"/>'},
+    party:{n:'Velký dům, až 50 lidí',t:'Větší setkání ve velkém domě. Hostitel schvaluje každého zvlášť a hlídá počet.',p:'Příklad: Zahrada, gril, hudba a drinky pro 30 lidí. Přijď s dobrou náladou.',i:'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 20c.5-3.5 3-5 6-5s5.5 1.5 6 5M15 15c3 0 5 1.2 6 4"/>'}
+  };
+  var BARVY=['#b44b29','#8a3617','#c8693f','#a2452a','#d9774f','#7a3014'];
+  var NAB=[
+    {id:1,jm:'Verča',vek:28,mesto:'Praha 3',scn:'film',kdy:'Dnes v 17:00',mista:3,volna:3,popis:'Sháním pro sebe dnes na večer 3 společníky: jednu holku a dva kluky. Pustíme si film a hudbu, udělám margaritu a něco malého k zakousnutí.',jidlo:'margarita, sýrové jednohubky',ov:true,tel:'+420 777 123 456',misto:'Vlkova 12, Praha 3'},
+    {id:2,jm:'Jakub',vek:31,mesto:'Praha 3',scn:'koktejly',kdy:'Dnes v 17:00',mista:3,volna:2,popis:'Chystám koktejly: Sex on the Beach a Long Island Iced Tea, i nealko varianty. Dobrá hudba a nové známosti. Kluci, holky, všichni vítáni.',jidlo:'koktejly, oříšky',ov:true,tel:'+420 603 555 120',misto:'Koněvova 40, Praha 3'},
+    {id:3,jm:'Tereza',vek:27,mesto:'Brno',scn:'seznameni',kdy:'Zítra v 19:00',mista:2,volna:1,popis:'Víno, deskovky a klidný večer. Hledám jednoho milého člověka na povídání a poznávání.',jidlo:'víno, sýry',ov:true,tel:'+420 722 888 301',misto:'Kounicova 18, Brno'},
+    {id:4,jm:'Martin',vek:35,mesto:'Plzeň',scn:'party',kdy:'V sobotu ve 20:00',mista:40,volna:26,popis:'Dům se zahradou, hudba, gril a drinky. Přijď s dobrou náladou a vezmi s sebou kamaráda nebo kamarádku.',jidlo:'gril, drinky, limonády',ov:true,tel:'+420 731 400 912',misto:'Sady Pětatřicátníků 9, Plzeň'},
+    {id:5,jm:'Honza',vek:30,mesto:'Praha 5',scn:'film',kdy:'Dnes ve 20:00',mista:2,volna:2,popis:'Kluk hledá kluka nebo dva na filmový večer, deku a zakousnutí. Klidně i jen příjemné povídání.',jidlo:'popcorn, mojito',ov:true,tel:'+420 608 220 774',misto:'Stroupežnického 5, Praha 5'}
+  ];
+  var FILTRY=[['vse','Vše'],['dnes','Dnes'],['zitra','Zítra'],['seznameni','Seznámení'],['film','Film'],['koktejly','Koktejly'],['party','Velký dům']];
+  var stav={odem:[],moje:[],filtr:'vse',fscn:'film',overeno:{vek:true,foto:false,doklad:false}};
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  function esc(t){return String(t).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+  function uloz(){try{localStorage.setItem('pripijito',JSON.stringify({odem:stav.odem,moje:stav.moje,motiv:document.documentElement.getAttribute('data-motiv')||'',overeno:stav.overeno}))}catch(e){}}
+  function nacti(){try{var d=JSON.parse(localStorage.getItem('pripijito')||'{}');stav.odem=d.odem||[];stav.moje=d.moje||[];if(d.overeno)stav.overeno=d.overeno;if(d.motiv)document.documentElement.setAttribute('data-motiv',d.motiv)}catch(e){}}
+  function toast(t){var e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove('on')},2600)}
+  function konfety(){var b=['#b44b29','#d9774f','#f1d9cb','#8a3617','#ffd7a8'];for(var i=0;i<46;i++){var k=document.createElement('i');k.className='konfety';
+    k.style.left=Math.random()*100+'vw';k.style.background=b[i%b.length];k.style.animationDelay=Math.random()*.4+'s';k.style.animationDuration=(1.2+Math.random()*1.2)+'s';
+    k.style.borderRadius=i%2?'50%':'2px';document.body.appendChild(k);(function(x){setTimeout(function(){x.remove()},2800)})(k)}}
+
+  function kresliScenare(){
+    $('#scenare').innerHTML=Object.keys(SCN).map(function(k){var s=SCN[k];
+      return '<article class="scn"><div class="em"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+s.i+'</svg></div><h3>'+s.n+'</h3><p>'+s.t+'</p><div class="pr">'+s.p+'</div><button data-scn="'+k+'">Ukázat takové večery →</button></article>'}).join('');
+  }
+  function kresliFiltr(){
+    $('#filtr').innerHTML=FILTRY.map(function(f){return '<button class="chip'+(stav.filtr===f[0]?' on':'')+'" data-f="'+f[0]+'">'+f[1]+'</button>'}).join('');
+  }
+  function odpovida(n){
+    var f=stav.filtr;if(f==='vse')return true;if(f==='dnes')return n.kdy.indexOf('Dnes')===0;if(f==='zitra')return n.kdy.indexOf('Zítra')===0;return n.scn===f;
+  }
+  function karta(n,rez){
+    var odem=stav.odem.indexOf(n.id)>-1;
+    var h='<article class="karta'+((odem||rez)?'':' zam')+'" data-id="'+n.id+'"><div class="kh"><div class="avatar" style="background:'+BARVY[n.id%BARVY.length]+'">'+esc(String(n.jm).charAt(0))+'</div>'+
+      '<div><b>'+esc(n.jm)+', '+esc(n.vek)+'</b><small>'+esc(n.mesto)+(n.ov?' · ověřený profil':'')+'</small></div><span class="stav">'+(n.volna?'Volno: '+n.volna+'/'+n.mista:'Obsazeno')+'</span></div>'+
+      '<p>'+esc(n.popis)+'</p><div class="tagy"><span class="tag ak">'+esc(SCN[n.scn].n)+'</span><span class="tag">'+esc(n.kdy)+'</span><span class="tag">'+esc(n.jidlo)+'</span></div>';
+    if(rez){
+      /* náhled a vlastní pozvání: bez tlačítek */
+    }else if(odem){
+      h+='<div class="odem"><div><b>Místo:</b> '+esc(n.misto)+'</div><div><b>Telefon:</b> '+esc(n.tel)+'</div></div>';
+      h+='<button class="tlac plny" data-poz="'+n.id+'">Poslat pozvánku</button>';
+    }else{
+      h+='<div class="skryte"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Fotka, místo a telefon jsou skryté</div>';
+      h+='<button class="tlac plny" data-odem="'+n.id+'">Zobrazit za 29&nbsp;Kč</button>';
+    }
+    return h+'</article>';
+  }
+  function kresliNabidky(){
+    var l=NAB.filter(odpovida);
+    $('#karty').innerHTML=l.length?l.map(function(n){return karta(n)}).join(''):'<div class="prazdno">Pro tenhle filtr dnes nic není. Zkus jiný, nebo sám někoho pozvi.</div>';
+  }
+  function kresliMoje(){
+    var o=NAB.filter(function(n){return stav.odem.indexOf(n.id)>-1});
+    $('#m-odem').innerHTML=o.length?o.map(function(n){return karta(n)}).join(''):'<div class="prazdno">Zatím nic. Najdi večer v nabídkách a odemkni ho za 29&nbsp;Kč.</div>';
+    $('#m-moje').innerHTML=stav.moje.length?stav.moje.map(function(n){return karta(n,true)}).join(''):'<div class="prazdno">Zatím jsi nikoho nepozval. Klepni na Pozvat.</div>';
+  }
+  function kresliOver(){
+    var o=stav.overeno;
+    var r=[['vek','Věk 18+','Potvrzeno při vstupu a znovu při ověření dokladem.'],['foto','Skutečná fotka obličeje','Povinná, vidí ji jen ti, kdo odemknou nabídku.'],['doklad','Kontrola dokladu','Doklad zkontrolujeme a hned smažeme. Uloží se jen záznam.']];
+    $('#over').innerHTML=r.map(function(x,i){return '<div class="ov'+(o[x[0]]?' hotovo':'')+'"><div class="k">'+(o[x[0]]?'✓':(i+1))+'</div><div style="flex:1"><b>'+x[1]+'</b><span>'+x[2]+'</span></div>'+
+      (o[x[0]]?'':'<button class="chip on" data-ov="'+x[0]+'">Ověřit</button>')+'</div>'}).join('');
+  }
+  function kresliFScn(){
+    $('#f-scn').innerHTML=Object.keys(SCN).map(function(k){return '<button type="button" class="chip'+(stav.fscn===k?' on':'')+'" data-fs="'+k+'">'+SCN[k].n+'</button>'}).join('');
+  }
+  function nahled(){
+    var n={id:99,jm:$('#f-jmeno').value||'Ty',vek:$('#f-vek').value||'18',mesto:$('#f-mesto').value||'Město',scn:stav.fscn,kdy:$('#f-kdy').value,mista:+$('#f-mista').value,volna:+$('#f-mista').value,
+      popis:$('#f-popis').value||'Tvůj popis se ukáže tady.',jidlo:$('#f-drinky').value||'drinky a něco k zakousnutí',ov:true};
+    $('#nahled').innerHTML=karta(n,true);
+    return n;
+  }
+  function qr(){
+    var N=25,s=8,r='',seed=7;function rnd(){seed=(seed*9301+49297)%233280;return seed/233280}
+    function oko(x,y){return '<rect x="'+x*s+'" y="'+y*s+'" width="'+7*s+'" height="'+7*s+'" fill="#2d231e"/><rect x="'+(x+1)*s+'" y="'+(y+1)*s+'" width="'+5*s+'" height="'+5*s+'" fill="#fff"/><rect x="'+(x+2)*s+'" y="'+(y+2)*s+'" width="'+3*s+'" height="'+3*s+'" fill="#2d231e"/>'}
+    for(var y=0;y<N;y++)for(var x=0;x<N;x++){var v=(x<8&&y<8)||(x>N-9&&y<8)||(x<8&&y>N-9);if(v)continue;if(rnd()>.52)r+='<rect x="'+x*s+'" y="'+y*s+'" width="'+s+'" height="'+s+'" fill="#2d231e"/>'}
+    return '<svg class="qr" viewBox="0 0 '+N*s+' '+N*s+'" role="img" aria-label="Ukázkový QR kód platby">'+r+oko(0,0)+oko(N-7,0)+oko(0,N-7)+'</svg>';
+  }
+  function otevriModal(h){$('#modal-obsah').innerHTML=h;$('#modal').classList.add('on');$('#modal').setAttribute('aria-hidden','false')}
+  function zavriModal(){$('#modal').classList.remove('on');$('#modal').setAttribute('aria-hidden','true')}
+  function platba(id){
+    var n=NAB.filter(function(x){return x.id===id})[0];
+    otevriModal('<h3 id="modal-n">Odemknout večer u '+esc(n.jm)+'</h3><p class="drobne" style="margin:0">Po zaplacení uvidíš fotku, místo a telefon a můžeš poslat pozvánku.</p>'+
+      '<div class="cena">29 Kč</div>'+qr()+'<div class="cekani"><span class="tecka"></span>Čekám na platbu v bankovní aplikaci</div>'+
+      '<p class="drobne" style="text-align:center;margin:0 0 14px">Poplatek je za zobrazení informací. Nevrací se, i když tě hostitel nepřijme.</p>'+
+      '<button class="tlac plny" data-zaplaceno="'+id+'">Zaplaceno (ukázka)</button><button class="tlac rameck plny" style="margin-top:10px" data-zavri="1">Zavřít</button>');
+  }
+  var STR=['uvod','nabidky','pozvat','moje','profil'];
+  function otevriMenu(){$('#sidebar').classList.add('on');$('#zavesa').classList.add('on')}
+  function zavriMenu(){$('#sidebar').classList.remove('on');$('#zavesa').classList.remove('on')}
+  function jdi(){
+    var h=(location.hash||'#uvod').slice(1);if(STR.indexOf(h)<0)h='uvod';
+    $$('[data-strana]').forEach(function(s){s.classList.toggle('on',s.id===h)});
+    $$('nav.tab a').forEach(function(a){a.classList.toggle('on',a.getAttribute('data-t')===h)});
+    if(h==='nabidky'){kresliFiltr();kresliNabidky()}if(h==='moje')kresliMoje();if(h==='profil')kresliOver();if(h==='pozvat')nahled();
+    window.scrollTo({top:0});zavriMenu();
+  }
+
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-f],[data-fs],[data-scn],[data-odem],[data-zaplaceno],[data-poz],[data-ov],[data-zavri]');
+    if(!t)return;
+    if(t.hasAttribute('data-f')){stav.filtr=t.getAttribute('data-f');kresliFiltr();kresliNabidky()}
+    else if(t.hasAttribute('data-fs')){stav.fscn=t.getAttribute('data-fs');kresliFScn();nahled()}
+    else if(t.hasAttribute('data-scn')){stav.filtr=t.getAttribute('data-scn');location.hash='#nabidky'}
+    else if(t.hasAttribute('data-odem')){platba(+t.getAttribute('data-odem'))}
+    else if(t.hasAttribute('data-zaplaceno')){var id=+t.getAttribute('data-zaplaceno');if(stav.odem.indexOf(id)<0)stav.odem.push(id);uloz();zavriModal();konfety();toast('Odemčeno. Teď můžeš poslat pozvánku.');kresliNabidky();kresliMoje()}
+    else if(t.hasAttribute('data-poz')){t.textContent='Pozvánka odeslána ✓';t.disabled=true;toast('Pozvánka odeslána. Hostitel se ti ozve.')}
+    else if(t.hasAttribute('data-ov')){stav.overeno[t.getAttribute('data-ov')]=true;uloz();kresliOver();toast('Ověřeno (ukázka).')}
+    else if(t.hasAttribute('data-zavri')){zavriModal()}
+  });
+  $('#modal-zav').addEventListener('click',zavriModal);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){zavriModal();zavriMenu()}});
+  $('#menu-btn').addEventListener('click',otevriMenu);
+  $('#zavesa').addEventListener('click',zavriMenu);
+  $('#papa').addEventListener('click',function(e){e.preventDefault();toast('V ostré verzi tě to přepne na Papanito se stejným účtem.');zavriMenu()});
+  $('#motiv').addEventListener('click',function(){
+    var r=document.documentElement,t=r.getAttribute('data-motiv')==='tmavy';
+    if(t){r.removeAttribute('data-motiv')}else{r.setAttribute('data-motiv','tmavy')}
+    $('#motiv-t').textContent=t?'Tmavý režim':'Světlý režim';uloz();
+  });
+  ['f-jmeno','f-vek','f-mesto','f-popis','f-drinky','f-kdy'].forEach(function(i){$('#'+i).addEventListener('input',nahled)});
+  $('#f-mista').addEventListener('input',function(){$('#f-mista-v').textContent=this.value;nahled()});
+  $('#forma').addEventListener('submit',function(e){
+    e.preventDefault();
+    if(+$('#f-vek').value<18){toast('Pozvat můžeš jen s věkem 18 a víc.');return}
+    if(!$('#f-ok').checked){toast('Potvrď prosím souhlas dole.');$('#f-ok').focus();return}
+    var n=nahled();n.id=100+stav.moje.length;stav.moje.unshift(n);uloz();konfety();toast('Pozvání zveřejněno (ukázka).');location.hash='#moje';
+  });
+  $('#brana-ano').addEventListener('click',function(){$('#brana').classList.add('skryt');try{sessionStorage.setItem('p18','1')}catch(e){}});
+  try{if(sessionStorage.getItem('p18')==='1')$('#brana').classList.add('skryt')}catch(e){}
+  window.addEventListener('hashchange',jdi);
+  nacti();
+  $('#motiv-t').textContent=document.documentElement.getAttribute('data-motiv')==='tmavy'?'Světlý režim':'Tmavý režim';
+  kresliScenare();kresliFiltr();kresliFScn();jdi();
+})();
+</script>
+</body>
+</html>
