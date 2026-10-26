@@ -107,6 +107,11 @@ h2{font-size:21px;margin:34px 0 12px}
 .hero-scena{position:absolute;right:0;top:196px;width:148px;height:206px;z-index:1;pointer-events:none}
 .hero-scena .sk{position:absolute;left:34px;bottom:0}
 .hero-scena .sk .tek{animation:plni 9s ease-in-out infinite}
+#hero-sklo.naklon .lahev,#hero-sklo.naklon .proud,#hero-sklo.naklon .sk .tek{animation:none}
+#hero-sklo.naklon .proud{transition:opacity .25s}
+#hero-sklo.solo .lahev,#hero-sklo.solo .proud{display:none}
+.nakl-btn{position:absolute;right:8px;top:404px;z-index:3;min-height:44px;padding:0 14px;border-radius:99px;border:1.5px solid var(--pri);background:var(--panel);color:var(--akc);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+@media(min-width:760px){.nakl-btn{display:none}}
 @keyframes plni{0%,8%{transform:translateY(64px)}38%,88%{transform:translateY(var(--y))}100%{transform:translateY(64px)}}
 .lahev{position:absolute;left:8px;top:0;width:46px;transform-origin:50% 50%;animation:nalij 9s ease-in-out infinite;filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
 .lahev svg{width:100%;height:auto;display:block;overflow:visible}
@@ -585,6 +590,7 @@ h2{font-size:21px;margin:34px 0 12px}
     <div class="plav" style="left:6%;top:318px;--z:0s" aria-hidden="true">🍋</div>
     <div class="plav" style="left:54%;top:22px;--t:10s;--z:2s" aria-hidden="true">🌿</div>
     <div class="hero-scena" data-par="0.04" aria-hidden="true" id="hero-sklo"></div>
+    <button class="nakl-btn" id="nakl-btn" type="button" hidden aria-label="Povolit nalévání nakloněním telefonu">🫗 Nalévej</button>
     <span class="stitek">✦ jen 18+ · malé společnosti nových lidí</span>
     <h1 class="nadpis">Na <em>skleničku?</em></h1>
     <div class="moto sv">Pozvání na drink dělá přátele.</div>
@@ -767,7 +773,7 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-papanito]'),functi
     {id:'vino',n:'Víno',p:'Červené, bílé nebo růžové.',b:'#d0506a',b2:'#7a0c2e',typ:'vino',alko:true,oz:'🍇'},
     {id:'bublinky',n:'Bublinky',p:'Prosecco, sekt nebo šumivé víno.',b:'#f7e08a',b2:'#e0a93f',typ:'vino',alko:true,oz:'🫧'},
     {id:'koktejl',n:'Koktejl',p:'Jednoduchý, podle chuti.',b:'#ff8fb1',b2:'#a8325a',typ:'kokt',alko:true,oz:'🍒'},
-    {id:'pivo',n:'Pivo',p:'Světlé, tmavé, točené nebo z lahve.',b:'#f6c250',b2:'#c98418',typ:'vys',alko:true,oz:'🍺'},
+    {id:'pivo',n:'Pivo',p:'Světlé, tmavé, točené nebo z lahve.',b:'#f6c250',b2:'#c98418',typ:'vys',alko:true,oz:''},
     {id:'limo',n:'Limonáda',p:'Domácí nebo z obchodu, nealko.',b:'#ffe27a',b2:'#8cc63f',typ:'vys',alko:false,oz:'🍋'},
     {id:'caj',n:'Čaj nebo káva',p:'Něco teplého, nealko.',b:'#d9a066',b2:'#8a5a2b',typ:'kokt',alko:false,oz:'☕'}
   ];
@@ -1166,6 +1172,29 @@ var hd=DRINKY[Math.floor(Math.random()*DRINKY.length)];
   $('#hero-sklo').innerHTML='<span class="lahev">'+lahev(hd)+'</span><span class="proud"></span>'+sklenka(hd,96);
   $('#brana-sklo').innerHTML=sklenka({typ:'vino',b:'#ff8fb1',b2:'#d6336c',oz:'✨'},92);
   $('#logo-sklo').innerHTML=sklenka({typ:'kokt',b:'#ff9a6b',b2:'#d6336c'},30);
+  /* Nalévání podle náklonu telefonu a tabletu, na počítači se nespouští. Při omezení pohybu zůstává jen klidná animace. */
+  (function(){
+    var sc=$('#hero-sklo');if(!sc||REDUKCE)return;
+    var lah=$('.lahev',sc),pr=$('.proud',sc),tek=$('.tek',sc),btn=$('#nakl-btn');
+    if(hd.id==='pivo')sc.classList.add('solo');
+    var y0=parseFloat(tek.style.getPropertyValue('--y'))||16,cil=0,pk=0,lev=0,zap=false,t0=0;
+    function mez(x){return Math.max(0,Math.min(1,x))}
+    function snimek(t){
+      var dt=Math.min(.05,(t-t0)/1000||0);t0=t;pk+=(cil-pk)*.16;
+      lev=mez(lev+(pk>.3?pk*dt*.4:-dt*.03));
+      lah.style.transform='translate('+(-8*(1-pk)).toFixed(1)+'px,'+(26*(1-pk)).toFixed(1)+'px) rotate('+(125*pk).toFixed(1)+'deg)';
+      pr.style.opacity=(pk>.3&&lev<1)?.9:0;pr.style.transform='scaleY('+((pk>.3&&lev<1)?1:0)+')';
+      tek.style.transform='translateY('+(64-(64-y0)*lev).toFixed(1)+'px)';
+      requestAnimationFrame(snimek);
+    }
+    function zapni(){if(zap)return;zap=true;sc.classList.add('naklon');t0=performance.now();requestAnimationFrame(snimek)}
+    function orient(e){if(e.gamma==null)return;zapni();cil=mez((Math.abs(e.gamma)-8)/37)}
+    function poslouchej(){window.addEventListener('deviceorientation',orient)}
+    if(typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){
+      btn.hidden=false;
+      btn.addEventListener('click',function(){DeviceOrientationEvent.requestPermission().then(function(r){if(r==='granted'){poslouchej();btn.hidden=true;toast('Nakloň telefon a drink se doleje.')}}).catch(function(){})});
+    }else if('ondeviceorientation' in window){poslouchej()}
+  })();
   kresliScenare();kresliFiltr();kresliFScn();kresliFDr();jdi();observuj();
 })();
 </script>
