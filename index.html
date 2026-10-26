@@ -201,6 +201,24 @@ h2{font-size:21px;margin:34px 0 12px}
 
 /* dveře, za kterými se zastavíš */
 .scenare{display:grid;gap:14px}
+.kdo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.kk{--g1:#e8365f;--g2:#ff9a6b;text-align:left;font:inherit;color:var(--text);cursor:pointer;display:flex;flex-direction:column;gap:6px;padding:16px 14px;min-height:44px;border-radius:22px;border:1px solid var(--line);background:var(--panel);box-shadow:var(--stin);position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s}
+.kk::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--g1),var(--g2));opacity:.0;transition:opacity .3s}
+.kk>*{position:relative}
+.kk:hover,.kk:active{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.18)}.kk:hover::before,.kk:active::before{opacity:.14}
+.kk .ik{width:48px;height:48px;padding:10px;border-radius:16px;background:linear-gradient(135deg,var(--g1),var(--g2));stroke:#fff;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.kk:hover .ik,.kk:active .ik{transform:rotate(-10deg) scale(1.12)}
+.kk b{font-size:15px;line-height:1.25}
+.kk span{font-size:12.5px;color:var(--muted);line-height:1.4}
+.scenare{grid-template-columns:1fr 1fr;gap:12px}
+.scenare .scn{padding:14px 14px 6px}
+.scenare .scn .pr,.scenare .scn .dr,.scenare .scn .chuti{display:none}
+.scenare .scn p{font-size:12.5px;margin-bottom:6px}
+.scenare .scn .em{width:42px;height:42px;border-radius:14px}
+.scenare .scn h3{font-size:15px}
+.scenare .scn button.dal{font-size:12.5px}
+@media(min-width:760px){.kdo{grid-template-columns:repeat(4,1fr)}.scenare{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.scenare{grid-template-columns:repeat(4,1fr)}}
 .scn{--g1:#e8365f;--g2:#ff9a6b;padding:18px 18px 12px;border-radius:24px;border:1px solid var(--line);background:var(--panel);box-shadow:var(--stin);position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s}
 .scn::before{content:'';position:absolute;inset:0;background:radial-gradient(240px circle at var(--mx,80%) var(--my,0%),var(--g1),transparent 70%);opacity:.0;transition:opacity .3s;pointer-events:none}
 .scn:hover{transform:translateY(-4px) rotate(-.4deg);box-shadow:0 16px 36px rgba(0,0,0,.18)}.scn:hover::before{opacity:.18}
@@ -343,7 +361,7 @@ h2{font-size:21px;margin:34px 0 12px}
 .papa-ikona{display:inline-block;transition:transform .25s}
 .papa-odkaz:hover .papa-ikona,.papa-odkaz:focus-visible .papa-ikona{transform:rotate(-14deg) scale(1.15)}
 @media (prefers-reduced-motion:no-preference){.papa-odkaz:hover::after,.papa-odkaz:focus-visible::after{transform:translateX(120%);transition:transform .7s}}
-@media(min-width:760px){.karty,.scenare{grid-template-columns:1fr 1fr}.wrap,.hl,nav.tab .in{max-width:900px}.dlazdice{grid-template-columns:repeat(3,1fr)}
+@media(min-width:760px){.karty{grid-template-columns:1fr 1fr}.wrap,.hl,nav.tab .in{max-width:900px}.dlazdice{grid-template-columns:repeat(3,1fr)}
   .dl{flex-direction:column;justify-content:center;text-align:center;padding:22px 12px;min-height:220px}.dl::after{width:auto;height:5px;right:0;bottom:auto}.dl .ik{width:84px;height:84px}
   .hero{padding:44px 40px 80px}.hero-scena{right:40px;top:40px;transform:scale(1.5);transform-origin:top right}.hero p.pop{max-width:420px}.nadpis{font-size:110px}
   .michadlo{grid-template-columns:150px 1fr 1fr}.surovy{grid-column:1/-1}}
@@ -471,7 +489,6 @@ h2{font-size:21px;margin:34px 0 12px}
 @media(min-width:900px){
   .wrap,.hl,nav.tab .in{max-width:1180px}
   .hero-scena{right:9%;top:36px;transform:scale(2)}
-  .scenare{grid-template-columns:repeat(3,1fr)}
   .odzgrid{grid-template-columns:repeat(3,1fr)}
 }
 @media(min-width:1100px){
@@ -497,7 +514,7 @@ h2{font-size:21px;margin:34px 0 12px}
     <div class="gsk" id="brana-sklo"></div>
     <div class="logo">Pripijito</div>
         <h1>Pozvání na drink dělá přátele</h1>
-    <p class="drobne" style="margin:0 0 14px;font-size:14.5px;color:var(--text)">Pripijito je místo, kde se lidé zvou k sobě domů na společný večer s drinkem: na rande, hru, film nebo jen povídání. Drink může být i bez alkoholu.</p>
+    <p class="drobne" style="margin:0 0 14px;font-size:14.5px;color:var(--text)">Pripijito je malá společnost nových lidí, kteří se chtějí poznat. Zvou se k sobě domů na společný večer s drinkem: na rande, hru, film nebo jen povídání. Drink může být i bez alkoholu.</p>
     <ul class="vstup-body">
       <li><i>🍸</i><span><b>Najdeš večer</b> s drinkem, který tě zláká</span></li>
       <li><i>🕯️</i><span><b>Pozveš k sobě</b> jednoho člověka i celou partu</span></li>
@@ -537,10 +554,10 @@ h2{font-size:21px;margin:34px 0 12px}
     <div class="plav" style="left:6%;top:318px;--z:0s" aria-hidden="true">🍋</div>
     <div class="plav" style="left:54%;top:22px;--t:10s;--z:2s" aria-hidden="true">🌿</div>
     <div class="hero-scena" data-par="0.04" aria-hidden="true" id="hero-sklo"></div>
-    <span class="stitek">✦ jen 18+ · pozvání na koktejl</span>
+    <span class="stitek">✦ jen 18+ · malé společnosti nových lidí</span>
     <h1 class="nadpis">Na <em>skleničku?</em></h1>
     <div class="moto sv">Pozvání na drink dělá přátele.</div>
-    <p class="pop">Přijď na koktejl k někomu domů, nebo pozvi k sobě. Lahvička na stole, dvě sklenice a večer, který se rozvine sám. Pro dva i pro celou partu.</p>
+    <p class="pop">Malá společnost nových lidí, kteří se chtějí poznat. Přijď na drink k někomu domů, nebo pozvi k sobě. Lahvička na stole, pár sklenic a večer, který se rozvine sám.</p>
     <a class="cta" href="#nabidky">Přijmout pozvání →</a>
   </div>
   <div class="dlazdice">
@@ -556,6 +573,15 @@ h2{font-size:21px;margin:34px 0 12px}
       <svg class="ik" viewBox="0 0 64 64" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="14" width="48" height="42" rx="9"/><path d="M8 26h48"/><path class="ring" d="M20 8v10M44 8v10"/><path class="mesic" d="M49 34a5 5 0 1 1-4-7 4 4 0 0 0 4 7z" stroke-width="1.5"/><circle class="hvezda" cx="17" cy="33" r="1.5"/><circle class="hvezda" cx="19" cy="49" r="1.1" style="animation-delay:.9s"/><g class="glas"><path d="M24 33h16l-8 10z" style="fill:var(--g1);fill-opacity:.22"/><path d="M32 43v8M27 51h10"/><circle class="bubl" cx="30" cy="38" r="1" style="--z:0s"/><circle class="bubl" cx="34" cy="39" r="1.1" style="--z:.9s"/></g></svg>
       <div><b>Moje večery</b><span>Pozvánky, schválení a odemčená kouzla na jednom místě</span></div>
     </a>
+  </div>
+
+  <h2 class="rev">Kdo tu hledá co</h2>
+  <p class="drobne rev" style="margin-top:-6px">Každý přichází s něčím jiným. Vyber, co je ti nejblíž, a ukážeme ti pozvání.</p>
+  <div class="kdo">
+    <button class="kk rev" data-kdo="hra" style="--g1:#e0902f;--g2:#f6c453;--w:.05s"><svg class="ik" viewBox="0 0 64 64" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="10" y="10" width="26" height="26" rx="6"/><circle cx="18" cy="18" r="1.6"/><circle cx="28" cy="28" r="1.6"/><circle cx="23" cy="23" r="1.6"/><path d="M42 30h10l-1 8a6 6 0 0 1-8 0z"/><path d="M47 44v8M42 52h10"/></svg><b>Deskovky a pivo či víno</b><span>Hra, dobrá společnost a sklenice po ruce</span></button>
+    <button class="kk rev" data-kdo="povidani" style="--g1:#d4527a;--g2:#ff9a6b;--w:.12s"><svg class="ik" viewBox="0 0 64 64" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14h30a6 6 0 0 1 6 6v12a6 6 0 0 1-6 6H26l-9 8v-8h-7a6 6 0 0 1-6-6V20a6 6 0 0 1 6-6z" transform="translate(4 0)"/><path d="M24 25h14M24 31h8"/></svg><b>Pár lidí na pokec doma</b><span>Uvolnit se, povídat a při sklence zapomenout na den</span></button>
+    <button class="kk rev" data-kdo="dnes" style="--g1:#7b5cd6;--g2:#d68cff;--w:.19s"><svg class="ik" viewBox="0 0 64 64" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M40 12a20 20 0 1 0 12 30A16 16 0 0 1 40 12z"/><circle cx="50" cy="16" r="1.6"/><circle cx="54" cy="26" r="1.2"/></svg><b>Nechci být dnes sám</b><span>Nevím, co dál. Pojď mezi lidi, jen na skleničku</span></button>
+    <button class="kk rev" data-kdo="party" style="--g1:#2e9fa6;--g2:#7ad8b5;--w:.26s"><svg class="ik" viewBox="0 0 64 64" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="22" cy="22" r="7"/><circle cx="44" cy="22" r="7"/><path d="M8 50c0-9 6-14 14-14s14 5 14 14M30 50c0-9 6-14 14-14s12 5 12 14"/></svg><b>Poznat nové lidi</b><span>Malá parta a nová tvář u stolu. Bez tlaku, s drinkem</span></button>
   </div>
 
   <h2 class="rev">Za jakými dveřmi se zastavíš?</h2>
@@ -966,7 +992,7 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-papanito]'),functi
   if(!REDUKCE)window.addEventListener('scroll',function(){if(!tik){tik=true;requestAnimationFrame(posun)}},{passive:true});
 
   document.addEventListener('click',function(e){
-    var t=e.target.closest('[data-up],[data-fk],[data-fb],[data-fs],[data-fd],[data-fv2],[data-scn],[data-odem],[data-zaplaceno],[data-poz],[data-ov],[data-zavri],[data-klink],[data-prof],[data-hodnotit],[data-hv],[data-hdv],[data-hodslat],[data-nahlasit],[data-vel]');
+    var t=e.target.closest('[data-up],[data-fk],[data-fb],[data-fs],[data-fd],[data-fv2],[data-scn],[data-kdo],[data-odem],[data-zaplaceno],[data-poz],[data-ov],[data-zavri],[data-klink],[data-prof],[data-hodnotit],[data-hv],[data-hdv],[data-hodslat],[data-nahlasit],[data-vel]');
     if(!t)return;
     if(t.hasAttribute('data-up')){var k=t.getAttribute('data-up');stav.up[k]=true;t.classList.add('hotovo');t.querySelector('span').textContent=(k==='h'?'Fotka hostitele nahrána ✓':'Fotka drinku nahrána ✓')}
     else if(t.hasAttribute('data-fk')){stav.fil[t.getAttribute('data-fk')]=t.getAttribute('data-fv');kresliFiltr();kresliNabidky()}
@@ -983,6 +1009,7 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-papanito]'),functi
     else if(t.hasAttribute('data-nahlasit')){zavriModal();toast('Nahlášeno. Profil hostiteli zatím zůstává, tým se na to podívá (ukázka).')}
     else if(t.hasAttribute('data-fs')){stav.fscn=t.getAttribute('data-fs');kresliFScn();nahled()}
     else if(t.hasAttribute('data-fd')){stav.fdr=t.getAttribute('data-fd');var d=drinkPodleId(stav.fdr);$('#f-drink').value=d.n;$('#f-alko').value=d.alko?'1':'0';kresliFDr();nahled()}
+    else if(t.hasAttribute('data-kdo')){var kd=t.getAttribute('data-kdo');stav.fil=JSON.parse(JSON.stringify(FIL0));if(kd==='dnes')stav.fil.kdy='dnes';else stav.fil.scn=kd;location.hash='#nabidky'}
     else if(t.hasAttribute('data-scn')){stav.fil=JSON.parse(JSON.stringify(FIL0));stav.fil.scn=t.getAttribute('data-scn');location.hash='#nabidky'}
     else if(t.hasAttribute('data-odem')){platba(+t.getAttribute('data-odem'))}
     else if(t.hasAttribute('data-zaplaceno')){var id=+t.getAttribute('data-zaplaceno');if(stav.odem.indexOf(id)<0)stav.odem.push(id);uloz();zavriModal();konfety();toast('Odemčeno. Teď můžeš zazvonit u dveří.');kresliNabidky();kresliMoje()}
