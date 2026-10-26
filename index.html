@@ -83,7 +83,7 @@ nav.tab a.on svg{animation:skok .5s cubic-bezier(.3,1.6,.5,1) both}
 @keyframes skok{from{transform:translateY(4px) scale(.8)}to{transform:translateY(-2px) scale(1.12)}}
 nav.tab a.on::before{content:'';position:absolute;top:0;width:34px;height:3px;border-radius:0 0 3px 3px;background:linear-gradient(90deg,var(--d1),var(--d3),var(--d4))}
 
-.strana{display:none;animation:vstup .45s ease both}.strana.on{display:block}
+.strana{display:none}.strana.on{display:block}.strana.vstup{animation:vstup .35s ease both}
 @keyframes vstup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 h1{font-size:30px;line-height:1.2;margin:0 0 10px}
 h2{font-size:21px;margin:34px 0 12px}
@@ -108,8 +108,15 @@ h2{font-size:21px;margin:34px 0 12px}
 .hero-scena .sk{position:absolute;left:34px;bottom:0}
 .hero-scena .sk .tek{animation:plni 9s ease-in-out infinite}
 #hero-sklo.naklon .lahev,#hero-sklo.naklon .proud,#hero-sklo.naklon .sk .tek{animation:none}
-#hero-sklo.naklon .proud{transition:opacity .25s}
-#hero-sklo.solo .lahev,#hero-sklo.solo .proud{display:none}
+#hero-sklo.naklon .sk .tek{transition:none}
+#hero-sklo .proud{border-radius:3px}
+#hero-sklo.naklon .proud{transform-origin:50% 0;background:linear-gradient(90deg,color-mix(in srgb,var(--b1) 70%,#fff),var(--b1) 50%,var(--b2));box-shadow:0 0 3px rgba(255,255,255,.5)}
+.plesk{position:absolute;width:16px;height:6px;margin:-3px 0 0 -8px;border-radius:50%;background:rgba(255,255,255,.7);opacity:0;pointer-events:none}
+.kohout{position:absolute;left:62px;top:56px;width:34px;height:30px;pointer-events:none;display:none}
+#hero-sklo.solo .kohout{display:block}
+.kohout::before{content:'';position:absolute;left:0;top:0;width:34px;height:14px;border-radius:7px;background:linear-gradient(#cfd5db,#8d949b)}
+.kohout::after{content:'';position:absolute;left:12px;top:12px;width:10px;height:14px;border-radius:2px 2px 5px 5px;background:linear-gradient(#aab1b8,#6f767d)}
+#hero-sklo.solo .lahev{display:none}
 .nakl-btn{position:absolute;right:8px;top:404px;z-index:3;min-height:44px;padding:0 14px;border-radius:99px;border:1.5px solid var(--pri);background:var(--panel);color:var(--akc);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
 @keyframes plni{0%,8%{transform:translateY(64px)}38%,88%{transform:translateY(var(--y))}100%{transform:translateY(64px)}}
 .lahev{position:absolute;left:8px;top:0;width:46px;transform-origin:50% 50%;animation:nalij 9s ease-in-out infinite;filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
@@ -263,7 +270,7 @@ h2{font-size:21px;margin:34px 0 12px}
 .chip:hover{border-color:var(--c);color:var(--c);transform:translateY(-2px) rotate(-1.5deg);box-shadow:0 6px 14px rgba(0,0,0,.12)}
 .chip.on{background:var(--c);border-color:var(--c);color:#fff;transform:scale(1.04);box-shadow:0 8px 18px rgba(0,0,0,.2)}
 .karty{display:grid;gap:16px}
-.karta{--g1:#e8365f;--g2:#ff9a6b;padding:18px;border-radius:26px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--stin);transition:transform .25s,box-shadow .25s;animation:vstup .5s ease both;position:relative;overflow:hidden}
+.karta{--g1:#e8365f;--g2:#ff9a6b;padding:18px;border-radius:26px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--stin);transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden}
 .karta::before{content:'';position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,var(--g1),var(--g2))}
 .karta:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.18)}
 .kh{display:flex;gap:14px;align-items:center}
@@ -369,6 +376,7 @@ h2{font-size:21px;margin:34px 0 12px}
   .dl{flex-direction:column;justify-content:center;text-align:center;padding:22px 12px;min-height:220px}.dl::after{width:auto;height:5px;right:0;bottom:auto}.dl .ik{width:84px;height:84px}
   .hero{padding:44px 40px 80px}.hero-scena{right:40px;top:40px;transform:scale(1.5);transform-origin:top right}.hero p.pop{max-width:420px}.nadpis{font-size:110px}
   .michadlo{grid-template-columns:150px 1fr 1fr}.surovy{grid-column:1/-1}}
+@media(hover:none){.karta:hover{transform:none;box-shadow:var(--stin)}.scn:hover,.kk:hover,.dl:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rev{opacity:1;transform:none}}
 
 /* filtry */
@@ -809,16 +817,16 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-papanito]'),functi
       '<linearGradient id="'+id+'l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+d.b+'"/><stop offset="1" stop-color="'+d.b2+'"/></linearGradient></defs>'+
       '<path d="'+t.misa+'" fill="var(--sklo-vypln)" stroke="none"/>'+
       '<g clip-path="url(#'+id+'c)"><g class="tek" style="--y:'+t.y+'px;transform:translateY(var(--y))"><rect x="-4" y="0" width="72" height="80" fill="url(#'+id+'l)"/>'+
-      '<path class="vlna" d="'+vlnaPath()+'" fill="'+d.b+'"/><path class="vlna b" d="'+vlnaPath()+'" fill="#fff" transform="translate(-10 2)"/>'+b+'</g></g>'+
+      '<path class="vlna" d="'+vlnaPath()+'" fill="'+d.b+'"/><path class="vlna b" d="'+vlnaPath()+'" fill="#fff" transform="translate(-10 2)"/>'+(d.pena?'<rect x="-4" y="-1" width="72" height="7" fill="#fffaf0" opacity=".92"/><path class="vlna" d="'+vlnaPath()+'" fill="#fffaf0" transform="translate(0 5)"/>':'')+b+'</g></g>'+
       '<path d="'+t.sklo+'" fill="none" stroke="var(--sklo)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'+
-      '<path d="M20 14l6 14" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" fill="none"/></svg>'+
+      '<path d="M20 14l6 14" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M44 16l-2 10" stroke="rgba(255,255,255,.35)" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>'+
       (d.oz?'<span class="oz" aria-hidden="true">'+d.oz+'</span>':'')+'</span>';
   }
   var DRINKY=[
     {id:'vino',n:'Víno',p:'Červené, bílé nebo růžové.',b:'#d0506a',b2:'#7a0c2e',typ:'vino',alko:true,oz:'🍇'},
-    {id:'bublinky',n:'Bublinky',p:'Prosecco, sekt nebo šumivé víno.',b:'#f7e08a',b2:'#e0a93f',typ:'vino',alko:true,oz:'🫧'},
+    {id:'bublinky',n:'Bublinky',p:'Prosecco, sekt nebo šumivé víno.',b:'#f7e08a',b2:'#e0a93f',typ:'vino',alko:true,oz:'🫧',pena:true},
     {id:'koktejl',n:'Koktejl',p:'Jednoduchý, podle chuti.',b:'#ff8fb1',b2:'#a8325a',typ:'kokt',alko:true,oz:'🍒'},
-    {id:'pivo',n:'Pivo',p:'Světlé, tmavé, točené nebo z lahve.',b:'#f6c250',b2:'#c98418',typ:'vys',alko:true,oz:''},
+    {id:'pivo',n:'Pivo',p:'Světlé, tmavé, točené nebo z lahve.',b:'#f6c250',b2:'#c98418',typ:'vys',alko:true,oz:'',pena:true},
     {id:'limo',n:'Limonáda',p:'Domácí nebo z obchodu, nealko.',b:'#ffe27a',b2:'#8cc63f',typ:'vys',alko:false,oz:'🍋'},
     {id:'caj',n:'Čaj nebo káva',p:'Něco teplého, nealko.',b:'#d9a066',b2:'#8a5a2b',typ:'kokt',alko:false,oz:'☕'}
   ];
@@ -1169,7 +1177,8 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-papanito]'),functi
   function zavriMenu(){$('#sidebar').classList.remove('on');$('#zavesa').classList.remove('on')}
   function jdi(){
     var h=(location.hash||'#uvod').slice(1);if(STR.indexOf(h)<0)h='uvod';
-    $$('[data-strana]').forEach(function(s){s.classList.toggle('on',s.id===h)});
+    var zmena=jdi.h!==h;jdi.h=h;
+    $$('[data-strana]').forEach(function(s){var on=s.id===h;s.classList.toggle('on',on);if(on&&zmena){s.classList.remove('vstup');void s.offsetWidth;s.classList.add('vstup')}});
     $$('nav.tab a').forEach(function(a){a.classList.toggle('on',a.getAttribute('data-t')===h)});
     if(h==='nabidky'){kresliFiltr();kresliNabidky()}if(h==='moje')kresliMoje();if(h==='profil'){kresliOver();kresliProfilBody();kresliKvota()}kresliPravidla();if(h==='pozvat'){kresliFScn();kresliFDr();nahled()}
     window.scrollTo({top:0});zavriMenu();observuj();
@@ -1266,7 +1275,7 @@ var hd=DRINKY[Math.floor(Math.random()*DRINKY.length)],heroZnovu=function(){};
   var RUKA='<span class="ruka" aria-hidden="true"><svg viewBox="0 0 40 34"><path d="M6 14c0-6 5-9 11-9h9c5 0 8 3 8 7v9c0 5-4 9-9 9H16c-6 0-10-5-10-10z" fill="#f2c9a5" stroke="#c99a74" stroke-width="1.5"/><path d="M12 12v8M18 11v9M24 11v9M30 12v8" stroke="#c99a74" stroke-width="1.4" stroke-linecap="round"/></svg></span>';
   function kresliHero(d){
     hd=d;var sc=$('#hero-sklo');sc.style.setProperty('--b1',d.b);sc.style.setProperty('--b2',d.b2);sc.classList.toggle('solo',d.id==='pivo');
-    sc.innerHTML='<span class="lahev">'+lahev(d)+RUKA+'</span><span class="proud"></span>'+sklenka(d,96);
+    sc.innerHTML='<span class="kohout"></span><span class="lahev">'+lahev(d)+RUKA+'</span><span class="proud"></span>'+sklenka(d,96)+'<i class="plesk"></i>';
     heroZnovu();
     $$('[data-hero]').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-hero')===d.id)});
   }
@@ -1278,16 +1287,24 @@ var hd=DRINKY[Math.floor(Math.random()*DRINKY.length)],heroZnovu=function(){};
   /* Nalévání podle náklonu telefonu a tabletu, na počítači se nespouští. Při omezení pohybu zůstává jen klidná animace. */
   (function(){
     var sc=$('#hero-sklo');if(!sc||REDUKCE)return;
-    var lah,pr,tek,y0,btn=$('#nakl-btn'),cil=0,pk=0,lev=0,zap=false,t0=0;
-    function vazba(){lah=$('.lahev',sc);pr=$('.proud',sc);tek=$('.tek',sc);y0=parseFloat(tek.style.getPropertyValue('--y'))||16;lev=0}
-    vazba();heroZnovu=function(){vazba();if(!zap)return};
+    var lah,pr,tek,sk,pl,y0,btn=$('#nakl-btn'),cil=0,pk=0,lev=0,lv=0,zap=false,t0=0;
+    function vazba(){lah=$('.lahev',sc);pr=$('.proud',sc);tek=$('.tek',sc);sk=$('.sk',sc);pl=$('.plesk',sc);y0=parseFloat(tek.style.getPropertyValue('--y'))||16;lev=0;lv=0;pk=0}
+    vazba();heroZnovu=function(){vazba()};
     function mez(x){return Math.max(0,Math.min(1,x))}
+    /* Lahev je otočená kolem svého středu, špička hrdla i proud se počítají z jejího sklonu, takže tekutina vždy teče z hrdla do sklenice. */
     function snimek(t){
-      var dt=Math.min(.05,(t-t0)/1000||0);t0=t;pk+=(cil-pk)*.16;
-      lev=mez(lev+(pk>.3?pk*dt*.4:-dt*.03));
-      if(!sc.classList.contains('solo'))lah.style.transform='translate('+(-8*(1-pk)).toFixed(1)+'px,'+(26*(1-pk)).toFixed(1)+'px) rotate('+(125*pk).toFixed(1)+'deg)';
-      pr.style.opacity=(pk>.3&&lev<1)?.9:0;pr.style.transform='scaleY('+((pk>.3&&lev<1)?1:0)+')';
-      tek.style.transform='translateY('+(64-(64-y0)*lev).toFixed(1)+'px)';
+      var dt=Math.min(.05,(t-t0)/1000||0);t0=t;pk+=(cil-pk)*.12;
+      var solo=sc.classList.contains('solo'),prah=solo?.45:.6,lije=pk>prah&&lev<1,sil=lije?mez((pk-prah)/.25):0;
+      lev=mez(lev+(lije?sil*dt*.28:-dt*.022));lv+=(lev-lv)*.1;
+      var tyS=64-(64-y0)*lv,sc15=sk.offsetWidth/64,povrch=sk.offsetTop+tyS*sc15,tx,ty,uh=125*pk,xs,ys;
+      if(solo){xs=82;ys=84}else{
+        tx=-8*(1-pk);ty=26*(1-pk);lah.style.transform='translate('+tx.toFixed(1)+'px,'+ty.toFixed(1)+'px) rotate('+uh.toFixed(1)+'deg)';
+        var r=uh*Math.PI/180;xs=31+tx+64.5*Math.sin(r);ys=64.5+ty-64.5*Math.cos(r)}
+      var sirka=1.5+2.6*sil,delka=Math.max(0,povrch-ys);
+      pr.style.left=(xs-sirka/2).toFixed(1)+'px';pr.style.top=ys.toFixed(1)+'px';pr.style.width=sirka.toFixed(1)+'px';pr.style.height=delka.toFixed(1)+'px';
+      pr.style.opacity=sil?.92:0;pr.style.transform='scaleX('+(1+.14*Math.sin(t/55)).toFixed(3)+')';
+      pl.style.left=xs.toFixed(1)+'px';pl.style.top=povrch.toFixed(1)+'px';pl.style.opacity=sil?(.5+.3*Math.sin(t/70)).toFixed(2):0;
+      tek.style.transform='translateY('+tyS.toFixed(2)+'px)';
       requestAnimationFrame(snimek);
     }
     function zapni(){if(zap)return;zap=true;sc.classList.add('naklon');t0=performance.now();requestAnimationFrame(snimek)}
