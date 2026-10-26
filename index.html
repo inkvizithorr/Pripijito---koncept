@@ -33,11 +33,11 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .wrap{max-width:560px;margin:0 auto;padding:0 18px;position:relative;z-index:1}
 
 /* plovoucí věty běží za celým webem, ne jen za bránou */
-#pribehy-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:.3}
+#pribehy-bg{position:fixed;top:0;left:0;width:100%;height:100vh;height:100lvh;z-index:0;pointer-events:none;overflow:hidden;opacity:.3;will-change:transform;contain:strict}
 #pribehy-bg .rt{position:absolute;left:-30%;top:-14%;width:160%;height:128%;transform:rotate(-8deg);display:flex;flex-direction:column;justify-content:space-between;padding:10px 0}
 #pribehy-bg .pb{font-size:16px}
 /* nadpisy a texty mají kolem sebe jemné pozadí, aby věty za nimi nerušily čtení */
-.strana h1,.strana h2,.strana h3,.strana p,.strana .drobne,.strana label,.prazdno{text-shadow:0 0 6px var(--bg),0 0 12px var(--bg),0 0 18px var(--bg)}
+.strana h1,.strana h2,.strana h3,.strana p,.strana .drobne,.strana label,.prazdno{text-shadow:none}
 .prazdno{background:color-mix(in srgb,var(--bg) 88%,transparent)}
 /* vnitřní stránky mají čitelný podklad, věty v pozadí prosvítají jen jemně a po okrajích */
 .strana:not(#uvod){background:color-mix(in srgb,var(--bg) 93%,transparent);border-radius:28px;margin:0 -10px;padding:1px 10px 26px}
@@ -47,14 +47,14 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 #pribehy-bg .pb.a{background:rgba(255,243,236,.6);border:1px solid var(--line)}
 :root[data-motiv='tmavy'] #pribehy-bg .pb.a{background:rgba(45,29,42,.6)}
 /* bubliny na pozadí: celý web je jako sklenice šampaňského */
-#bubliny{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#bubliny{position:fixed;top:0;left:0;width:100%;height:100vh;height:100lvh;z-index:0;pointer-events:none;overflow:hidden;will-change:transform;contain:strict}
 #bubliny i{position:absolute;bottom:-40px;border-radius:50%;border:1.5px solid rgba(212,162,74,.4);background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.7),rgba(255,255,255,0) 60%);animation:stoupa var(--t,14s) linear infinite;animation-delay:var(--z,0s)}
 :root[data-motiv='tmavy'] #bubliny i{border-color:rgba(255,255,255,.22)}
 /* bublina propluje jen v první třetině dlouhého cyklu, zbytek času je neviditelná */
 @keyframes stoupa{0%{transform:translate(0,0) scale(.6);opacity:0}2%{opacity:1}16%{transform:translate(var(--x,18px),-55vh) scale(1)}30%{transform:translate(calc(var(--x,18px) * -1),-112vh) scale(1.15);opacity:0}100%{transform:translate(0,-112vh);opacity:0}}
 
 header{position:sticky;top:0;z-index:30;background:var(--panel);color:var(--akc);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
-header::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:3px;background:linear-gradient(90deg,var(--d2),var(--d3),var(--d2));background-size:200% 100%;animation:tok 10s linear infinite}
+header::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:3px;background:linear-gradient(90deg,var(--d2),var(--d3),var(--d2));background-size:200% 100%}
 .hl{display:flex;align-items:center;justify-content:space-between;height:60px;max-width:560px;margin:0 auto;padding:0 12px 0 18px}
 .logo{font-weight:800;font-size:22px;letter-spacing:.2px;display:flex;align-items:center;gap:8px}
 .logo .lg{width:30px;height:30px}
@@ -111,7 +111,6 @@ h2{font-size:21px;margin:34px 0 12px}
 #hero-sklo.naklon .proud{transition:opacity .25s}
 #hero-sklo.solo .lahev,#hero-sklo.solo .proud{display:none}
 .nakl-btn{position:absolute;right:8px;top:404px;z-index:3;min-height:44px;padding:0 14px;border-radius:99px;border:1.5px solid var(--pri);background:var(--panel);color:var(--akc);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
-@media(min-width:760px){.nakl-btn{display:none}}
 @keyframes plni{0%,8%{transform:translateY(64px)}38%,88%{transform:translateY(var(--y))}100%{transform:translateY(64px)}}
 .lahev{position:absolute;left:8px;top:0;width:46px;transform-origin:50% 50%;animation:nalij 9s ease-in-out infinite;filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
 .lahev svg{width:100%;height:auto;display:block;overflow:visible}
@@ -537,6 +536,44 @@ h2{font-size:21px;margin:34px 0 12px}
 .brana-ok a{color:var(--akc)}
 #brana-ano[disabled]{opacity:.5;filter:saturate(.5);pointer-events:none}
 @media(min-width:760px){.kvgrid{grid-template-columns:1fr 1fr}}
+
+.foto{position:relative;margin:-22px -20px 14px;aspect-ratio:1/1.12;max-height:430px;overflow:hidden;background:linear-gradient(150deg,var(--g1),var(--g2));border-radius:28px 28px 0 0}
+.foto .art{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center}
+.foto .art svg{width:62%;height:auto;margin-bottom:-4%}
+.foto .bok{position:absolute;border-radius:50%;background:rgba(255,255,255,.22)}
+.foto .b1{width:120px;height:120px;left:-30px;top:20px}.foto .b2{width:80px;height:80px;right:10px;top:60px}
+.foto.zam .art,.foto.zam .bok{filter:blur(18px);transform:scale(1.2)}
+.foto .zamek{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px 22px;background:rgba(28,16,22,.42);color:#fff;text-align:center}
+.foto .zamek>b{font-size:14px}
+.foto .zamek .qr{width:132px;height:132px;padding:7px;margin:2px auto;animation:none}
+.foto .zamek .cena,.foto .zamek .cekani{color:#fff}
+.foto .oz-ok{position:absolute;left:14px;bottom:14px;padding:6px 12px;border-radius:99px;background:rgba(255,255,255,.9);color:#1e8e5a;font-size:12.5px;font-weight:700}
+.foto:not(.zam)::after{content:'ukázková fotka';position:absolute;right:12px;top:12px;font-size:11px;color:rgba(255,255,255,.85)}
+.pr-jm{margin:0 0 2px;font-size:22px}
+.modal .pr-stat{margin:0 0 14px}
+.foto .zamek .cena{background:none;-webkit-text-fill-color:#fff;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.4)}
+.pr-popis{margin:0 0 6px;font-size:14px}
+.skr{display:grid;gap:8px}
+.skr>div{display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:14px;background:var(--panel2);border:1px solid var(--line)}
+.skr>div.zamk{border-style:dashed}
+.skr i{font-style:normal;font-size:20px;flex:none}
+.skr b{display:block;font-size:13.5px}.skr small{color:var(--muted);font-size:12.5px;line-height:1.35}
+.pravidla{margin:16px 0 4px;padding:14px;border-radius:18px;background:var(--panel2);border:1px solid var(--line)}
+.pravidla .pt{display:block;margin-bottom:8px;font-size:14.5px}
+.pravidla>div{display:flex;gap:10px;align-items:flex-start;padding:5px 0;font-size:13px;line-height:1.4}
+.pravidla>div i{font-style:normal;flex:none;font-size:18px;width:26px;text-align:center}
+.pravidla small{display:block;margin-top:8px;color:var(--muted);font-size:12px}
+.pravidla small a{color:var(--akc);display:inline-flex;align-items:center;min-height:44px}
+.mini-pr{margin:8px 0 0;font-size:12.5px;color:var(--muted);text-align:center}
+.verze{margin:10px 0 0;font-size:11.5px;color:var(--muted)}
+.hero-vyber{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:2;max-width:min(330px,100%)}
+.hero-vyber .chip{min-height:44px;padding:0 14px;font-size:13px}
+.hero-vyber .chip.on{background:var(--tep);border-color:var(--pri);color:var(--akc)}
+.ruka{position:absolute;left:-14px;top:30px;width:30px;pointer-events:none}
+.ruka svg{display:block;width:100%;height:auto}
+#hero-sklo.solo .ruka{display:none}
+.skroluje #pribehy-bg .radek,.skroluje #bubliny i,.skroluje .sk .tek,.skroluje .sk .vlna,.skroluje .sk .bb,.skroluje .plav,.skroluje .jiskry i{animation-play-state:paused}
+@media(max-width:759px){#pribehy-bg .radek:nth-child(n+5){display:none}#bubliny i:nth-child(n+4){display:none}.plav{display:none}}
 </style>
 </head>
 <body>
@@ -596,6 +633,7 @@ h2{font-size:21px;margin:34px 0 12px}
     <div class="moto sv">Pozvání na drink dělá přátele.</div>
     <p class="pop">Malá společnost nových lidí, kteří se chtějí poznat. Přijď na drink k někomu domů, nebo pozvi k sobě. Lahvička na stole, pár sklenic a večer, který se rozvine sám.</p>
     <a class="cta" href="#nabidky">Přijmout pozvání →</a>
+    <div class="hero-vyber" id="hero-vyber" aria-label="Co nalít"></div>
   </div>
   <div class="dlazdice">
     <a class="dl d1 rev" href="#nabidky" style="--w:.05s">
@@ -632,7 +670,11 @@ h2{font-size:21px;margin:34px 0 12px}
     <div class="krok rev"><i>3</i><div><b>Zazvoníš a připiješ si</b><span>Hostitel přijme, koho chce. Když se nepropojíte, peníze se vrací. Pak už jen ťuknutí sklenic a večer, který nikdo nepředpoví.</span></div></div>
   </div>
 
-  <div class="paticka"><b>Kouzlo ano, nebezpečí ne:</b> jen 18+, ověřený profil s fotkou, hostitel schvaluje každého, drink se nalévá před hostem a nikdy nezůstává bez dozoru, každý může kdykoli odejít. Nahlášení a tlačítko Chci odejít jsou vždy po ruce. Pripijito je jen zprostředkování, večer i jeho průběh jsou na domluvě lidí.<div class="pravni-odkazy"><a href="vop.html">Podmínky použití</a><a href="gdpr.html">Ochrana osobních údajů</a><a href="cookies.html">Cookies</a></div></div>
+  <h2 class="rev">Když se to nepovede</h2>
+  <p class="drobne rev" style="margin-top:-6px">Odmítnout můžeš vždy. Takhle to vypadá s penězi:</p>
+  <div data-pravidla="host"></div>
+
+  <div class="paticka"><b>Kouzlo ano, nebezpečí ne:</b> jen 18+, ověřený profil s fotkou, hostitel schvaluje každého, drink se nalévá před hostem a nikdy nezůstává bez dozoru, každý může kdykoli odejít. Nahlášení a tlačítko Chci odejít jsou vždy po ruce. Pripijito je jen zprostředkování, večer i jeho průběh jsou na domluvě lidí.<div class="pravni-odkazy"><a href="vop.html">Podmínky použití</a><a href="gdpr.html">Ochrana osobních údajů</a><a href="cookies.html">Cookies</a></div><p class="verze">Verze 26. 10. 2026 · profil s velkou fotkou a pravidla odmítnutí</p></div>
 </section>
 
 <section class="strana" id="nabidky" data-strana>
@@ -685,6 +727,7 @@ h2{font-size:21px;margin:34px 0 12px}
         <input id="f-mista" type="range" min="1" max="50" value="3"></div>
     </div>
     <label class="souhlas"><input type="checkbox" id="f-ok"><span>Je mi víc než 18 let, každého hosta si schválím sám a drink nalévám před hostem. Nikdo nesmí být k ničemu nucen. Souhlasím s <a href="vop.html" target="_blank" rel="noopener">podmínkami</a> a <a href="gdpr.html" target="_blank" rel="noopener">zásadami ochrany osobních údajů</a>.</span></label>
+    <div data-pravidla="hostitel"></div>
     <div class="nahled"><small>Takhle to uvidí ostatní:</small><div id="nahled"></div></div>
     <button class="tlac plny" id="f-odeslat" type="submit">Zveřejnit pozvání</button>
   </form>
@@ -693,9 +736,11 @@ h2{font-size:21px;margin:34px 0 12px}
 <section class="strana" id="moje" data-strana>
   <h1 style="margin-top:22px">Moje večery</h1>
   <p class="drobne" style="margin-top:-4px">Odemčené nabídky a tvoje pozvánky na jednom místě.</p>
+  <div data-pravidla="host" style="margin-top:14px"></div>
   <h2 style="margin-top:18px">Odemčeno</h2>
   <div class="karty" id="m-odem"></div>
   <h2>Moje pozvání</h2>
+  <div data-pravidla="hostitel"></div>
   <div class="karty" id="m-moje"></div>
 </section>
 
@@ -917,7 +962,7 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-papanito]'),functi
       }
     }else{
       h+='<div class="skryte"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Fotka hostitele a přesné místo jsou skryté</div>';
-      h+='<button class="tlac plny" data-odem="'+n.id+'">Zobrazit za 29&nbsp;Kč</button>';
+      h+='<button class="tlac plny" data-odem="'+n.id+'">Zobrazit fotku a údaje za 29&nbsp;Kč</button><p class="mini-pr">💸 Odmítne-li tě hostitel, peníze se vrátí vždy.</p>';
     }
     return h+'</article>';
   }
@@ -975,14 +1020,53 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-papanito]'),functi
     $('#profil-jak').innerHTML=JAK.map(function(j){return '<div><b class="bd">'+j[0]+'</b><div><b>'+j[1]+'</b><span>'+j[2]+'</span></div></div>'}).join('');
     $('#profil-odz').innerHTML=ODZ.map(function(x){var on=x[4]();return '<div class="odzk'+(on?' on':'')+'"><span class="e">'+x[1]+'</span><b>'+x[2]+'</b><small>'+(on?'Získáno ✓':x[3])+'</small></div>'}).join('');
   }
+  /* Pravidla odmítnutí jako krátké ikonové řádky, vidět před platbou i v Moje večery */
+  function pravidla(role){
+    var k=kvota(role),hostitel=role==='hostitel';
+    var r=hostitel?[
+      ['💸','Host odmítne tebe','tvých 29 Kč se vrátí vždy'],
+      ['🔁','Nepropojíte se','vrací se oběma'],
+      ['🙅','Odmítneš ty hosta','vrátí se v limitu (o 1 víc než host), hostovi vždy'],
+      ['⚠️','Nad limit','29 Kč propadne a −5 bodů']
+    ]:[
+      ['💸','Odmítne tě hostitel','29 Kč se ti vrátí vždy'],
+      ['🔁','Nepropojíte se','vrací se oběma'],
+      ['🙅','Odmítneš ty','vrátí se v limitu (nováček 1×, s každým večerem +1)'],
+      ['⚠️','Nad limit','29 Kč propadne a −5 bodů']
+    ];
+    return '<div class="pravidla"><b class="pt">Když se to nepovede</b>'+r.map(function(x){return '<div><i>'+x[0]+'</i><span><b>'+x[1]+':</b> '+x[2]+'</span></div>'}).join('')+
+      '<small>Tvoje odmítnutí s vrácením: dnes '+k.ud+'/'+k.den+', týden '+k.ut+'/'+k.tyd+', měsíc '+k.um+'/'+k.M+'. <a href="#profil" data-zavri="1">Podrobně v Profilu</a></small></div>';
+  }
+  function kresliPravidla(){$$('[data-pravidla]').forEach(function(e){e.innerHTML=pravidla(e.getAttribute('data-pravidla'))})}
+  var SIL='<svg viewBox="0 0 100 120" aria-hidden="true"><circle cx="50" cy="42" r="21" fill="rgba(255,255,255,.88)"/><path d="M10 120c2-30 18-44 40-44s38 14 40 44z" fill="rgba(255,255,255,.88)"/></svg>';
+  /* Velká fotka: před platbou rozmazaná a přes ni vyskočí QR, po platbě zřetelná */
+  function fotoBlok(zam,g1,g2,qrAkce){
+    return '<div class="foto'+(zam?' zam':'')+'" style="--g1:'+g1+';--g2:'+g2+'"><div class="art">'+SIL+'</div><i class="bok b1"></i><i class="bok b2"></i>'+
+      (zam?'<div class="zamek"><b>Fotka je skrytá</b>'+qr()+'<div class="cena sv" style="font-size:28px;margin:0">29&nbsp;Kč</div><span class="cekani" style="margin:0"><span class="tecka"></span>Čekám na platbu</span>'+qrAkce+'</div>':'<span class="oz-ok">Odemčeno ✓</span>')+'</div>';
+  }
+  function skryteRadky(zam,r){return '<div class="pr-sek">'+(zam?'Odemkne se po zaplacení':'Odemčené údaje')+'</div><div class="skr">'+r.map(function(x){return '<div class="'+(zam?'zamk':'')+'"><i>'+(zam?'🔒':x[0])+'</i><span><b>'+x[1]+'</b><small>'+(zam?'••••••••':x[2])+'</small></span></div>'}).join('')+'</div>'}
   function profilHosta(id){
-    var n=NAB.filter(function(x){return x.id===id})[0],ho=hoste(n),s=SCN[n.scn],u=UR[uroven(ho.b)],odem=stav.odem.indexOf(n.id)>-1;
-    
-    otevriModal('<div class="pr-ban" style="--g1:'+s.g[0]+';--g2:'+s.g[1]+'"><span class="avw"><span class="avatar" style="'+(odem?'':'filter:blur(6px)')+'">'+esc(String(n.jm).charAt(0))+'</span><span class="uroven">'+u[2]+'</span></span><h3 id="modal-n">'+esc(n.jm)+', '+esc(n.vek)+'</h3><p>'+esc(n.mesto)+' · '+u[1]+(n.ov?' · ověřený profil 🛡️':'')+'</p></div>'+
+    var n=NAB.filter(function(x){return x.id===id})[0],ho=hoste(n),s=SCN[n.scn],u=UR[uroven(ho.b)],odem=stav.odem.indexOf(n.id)>-1,zam=!odem;
+    var drinky=ho.dr.filter(function(v,i,a){return a.indexOf(v)===i});
+    var skr=[['📍','Čtvrť',n.misto],['🛡️','Ověření',ho.odz.join(' · ')],['💬','Chat v aplikaci','Napíšeš hostiteli ještě před zazvoněním'],['🏠','Přesná adresa a kód','Pošle hostitel až po přijetí']];
+    otevriModal(fotoBlok(zam,s.g[0],s.g[1],'<button class="tlac plny" data-zaplaceno="'+n.id+'">Zaplaceno (ukázka)</button>')+
+      '<h3 id="modal-n" class="pr-jm">'+esc(n.jm)+', '+esc(n.vek)+'</h3><p class="drobne" style="margin:0 0 10px">'+esc(n.mesto)+' · '+u[1]+' '+u[2]+(n.ov?' · ověřený profil 🛡️':'')+'</p>'+
       '<div class="pr-stat"><div><b>'+cz(ho.s)+'</b><span>'+hv(ho.s)+'</span></div><div><b>'+ho.v+'</b><span>večerů</span></div></div>'+
-      '<div class="pr-sek">Co rád nalévá</div><div class="mini-dr">'+ho.dr.filter(function(v,i,a){return a.indexOf(v)===i}).map(function(i){var d=drinkPodleId(i);return '<div>'+sklenka(d,52)+esc(d.n)+'</div>'}).join('')+'</div>'+
-      (ho.rec.length?'<div class="pr-sek">Co říkají hosté</div>'+ho.rec.slice(0,2).map(function(r){return '<div class="rec">'+esc(r[1])+'<small><span>'+esc(r[0])+'</span>'+hv(r[2])+'</small></div>'}).join(''):'')+
-      '<div class="pr-akce">'+(odem?'<button class="tlac plny" data-poz="'+n.id+'" data-zavri="1">Zazvonit u dveří</button>':'<button class="tlac plny" data-odem="'+n.id+'">Odemknout za 29&nbsp;Kč</button>')+'<button class="tlac rameck plny" data-zavri="1">Zavřít</button><button class="nahlasit" data-nahlasit="1">Nahlásit profil</button></div>');
+      '<p class="pr-popis">'+esc(n.popis)+'</p>'+
+      '<div class="pr-sek">Co rád nalévá</div><div class="mini-dr">'+drinky.map(function(i){var d=drinkPodleId(i);return '<div>'+sklenka(d,52)+esc(d.n)+'</div>'}).join('')+'</div>'+
+      skryteRadky(zam,skr)+
+      (ho.rec.length?'<div class="pr-sek">Co říkají hosté</div>'+(zam?ho.rec.slice(0,1):ho.rec).map(function(r){return '<div class="rec">'+esc(r[1])+'<small><span>'+esc(r[0])+'</span>'+hv(r[2])+'</small></div>'}).join(''):'')+
+      pravidla('host')+
+      '<div class="pr-akce">'+(odem?(stav.stavy[n.id]==='zvoneno'?'<div class="stavbox">Zazvonil jsi, čeká se na hostitele ✓</div><button class="slabe" data-zrus="'+n.id+'">Zrušit zazvonění a vrátit poplatek</button>':stav.stavy[n.id]==='prijato'?'<div class="stavbox">Přijato ✓</div>':'<button class="tlac plny" data-poz="'+n.id+'">Zazvonit u dveří</button><button class="tlac rameck plny" data-zrus="'+n.id+'">Nechci, vrátit poplatek</button>'):'')+'<button class="tlac rameck plny" data-zavri="1">Zavřít</button><button class="nahlasit" data-nahlasit="1">Nahlásit profil</button></div>');
+  }
+  /* Profil hosta, který se hlásí na moje pozvání (pohled hostitele) */
+  function profilZadosti(i){
+    var z=stav.moje[i].zadost,zam=!z.plat;
+    var skr=[['🛡️','Ověření','Věk, fotka i doklad ověřené'],['⭐','Hodnocení','4,8 · 12 večerů, nikdy se nenedostavil'],['🍷','Pije rád','Víno, limonáda'],['💬','O sobě','Ráda hraju deskovky a miluju čaj s medem.']];
+    otevriModal(fotoBlok(zam,'#6b4a8a','#d68cff','<button class="tlac plny" data-hzaplaceno="'+i+'">Zaplaceno (ukázka)</button>')+
+      '<h3 id="modal-n" class="pr-jm">'+esc(z.jm)+', '+esc(z.vek)+'</h3><p class="drobne" style="margin:0 0 10px">Praha · hlásí se na tvoje pozvání</p>'+
+      skryteRadky(zam,skr)+pravidla('hostitel')+
+      '<div class="pr-akce">'+(zam?'':'<button class="tlac plny" data-hprij="'+i+'">Přijmout</button>')+'<button class="tlac rameck plny" data-hodm="'+i+'">Odmítnout</button><button class="nahlasit" data-zavri="1">Zavřít</button></div>');
   }
   var hodSk=0,hodAno=null;
   function hodnotit(id){
@@ -1079,7 +1163,7 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-papanito]'),functi
     var h=(location.hash||'#uvod').slice(1);if(STR.indexOf(h)<0)h='uvod';
     $$('[data-strana]').forEach(function(s){s.classList.toggle('on',s.id===h)});
     $$('nav.tab a').forEach(function(a){a.classList.toggle('on',a.getAttribute('data-t')===h)});
-    if(h==='nabidky'){kresliFiltr();kresliNabidky()}if(h==='moje')kresliMoje();if(h==='profil'){kresliOver();kresliProfilBody();kresliKvota()}if(h==='pozvat'){kresliFScn();kresliFDr();nahled()}
+    if(h==='nabidky'){kresliFiltr();kresliNabidky()}if(h==='moje')kresliMoje();if(h==='profil'){kresliOver();kresliProfilBody();kresliKvota()}kresliPravidla();if(h==='pozvat'){kresliFScn();kresliFDr();nahled()}
     window.scrollTo({top:0});zavriMenu();observuj();
   }
 
@@ -1092,8 +1176,10 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-papanito]'),functi
     l.forEach(function(e){io.observe(e)});
   }
   var par=$$('[data-par]'),tik=false;
-  function posun(){tik=false;var y=window.scrollY;par.forEach(function(e){e.style.transform='translateY('+(y*(+e.getAttribute('data-par'))).toFixed(1)+'px) rotate('+(y*.03).toFixed(1)+'deg)'})}
+  function posun(){tik=false;var y=window.scrollY;if(y>900)return;par.forEach(function(e){e.style.transform='translateY('+(y*(+e.getAttribute('data-par'))).toFixed(1)+'px) rotate('+(y*.03).toFixed(1)+'deg)'})}
   if(!REDUKCE)window.addEventListener('scroll',function(){if(!tik){tik=true;requestAnimationFrame(posun)}},{passive:true});
+  /* Při rolování se animace na pozadí zastaví, aby se nic nepřekreslovalo a neproblikávalo */
+  var skT=0;window.addEventListener('scroll',function(){var b=document.body;if(!b.classList.contains('skroluje'))b.classList.add('skroluje');clearTimeout(skT);skT=setTimeout(function(){b.classList.remove('skroluje')},180)},{passive:true});
 
   document.addEventListener('click',function(e){
     var t=e.target.closest('[data-up],[data-fk],[data-fb],[data-fs],[data-fd],[data-fv2],[data-scn],[data-kdo],[data-zrus],[data-ukprij],[data-ukodm],[data-hplat],[data-hzaplaceno],[data-hprij],[data-hodm],[data-hproslo],[data-odem],[data-zaplaceno],[data-poz],[data-ov],[data-zavri],[data-klink],[data-prof],[data-hodnotit],[data-hv],[data-hdv],[data-hodslat],[data-nahlasit],[data-vel]');
@@ -1110,15 +1196,16 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-papanito]'),functi
       if(!hodSk){toast('Klepni prosím na sklenice.');return}
       var hid=+t.getAttribute('data-hodslat');if(stav.hod.indexOf(hid)<0)stav.hod.push(hid);uloz();zavriModal();konfety();body(10,'',null);zapis('Večer ohodnocen',10,0);toast('Díky! +10 bodů za ohodnocení večera.');kresliMoje();kresliNabidky();
     }
-    else if(t.hasAttribute('data-zrus')){var zi=+t.getAttribute('data-zrus'),zn=NAB.filter(function(x){return x.id===zi})[0],zv=odmitni('host');
+    else if(t.hasAttribute('data-zrus')){zavriModal();var zi=+t.getAttribute('data-zrus'),zn=NAB.filter(function(x){return x.id===zi})[0],zv=odmitni('host');
       stav.odem=stav.odem.filter(function(x){return x!==zi});delete stav.stavy[zi];uloz();zapis('Odmítl jsi pozvání od '+zn.jm+(zv?': poplatek vrácen':': bez vrácení poplatku'),zv?0:-5,zv?29:0);kresliNabidky();kresliMoje();
-      vysledek(zv?'💸':'🙈',zv?'Peníze se ti vrátí':'Poplatek se tentokrát nevrací',zv?'Odmítnutí bylo v mezích tvého hodnocení, 29&nbsp;Kč se vrací na tvůj účet. Hostiteli se vrací taky.':'Vyčerpal jsi počet odmítnutí s vrácením a ztrácíš 5 bodů. Hostiteli se peníze vrátí. S každým dokončeným večerem ti přibyde další odmítnutí.')}
+      var kz=kvota('host'),zb=Math.max(0,kz.M-kz.um);
+      vysledek(zv?'💸':'🙈',zv?'Peníze se ti vrátí':'Poplatek se tentokrát nevrací',zv?'Vrací se automaticky: 29&nbsp;Kč dostaneš zpět na účet a nic dalšího nevyplňuješ. Hostiteli se vrací také. '+(zb?'Do konce měsíce ti zbývá '+zb+' odmítnutí s vrácením.':'Další odmítnutí s vrácením budeš mít po dokončeném večeru.'):'Poplatek 29&nbsp;Kč se nevrací, protože jsi vyčerpal počet odmítnutí s vrácením a ztrácíš 5 bodů. Hostiteli se peníze vrací. S každým dokončeným večerem ti přibyde další odmítnutí s vrácením.')}
     else if(t.hasAttribute('data-ukprij')){var ui=+t.getAttribute('data-ukprij');stav.stavy[ui]='prijato';uloz();zapis('Hostitel tě přijal',0,0);konfety();toast('Hostitel tě přijal. Adresu pošle do chatu.');kresliNabidky();kresliMoje()}
     else if(t.hasAttribute('data-ukodm')){var oi=+t.getAttribute('data-ukodm'),on=NAB.filter(function(x){return x.id===oi})[0];stav.odem=stav.odem.filter(function(x){return x!==oi});delete stav.stavy[oi];uloz();zapis('Odmítl tě '+on.jm+': poplatek vrácen vždy',0,29);kresliNabidky();kresliMoje();
       vysledek('💸','Hostitel tě odmítl','Nic se neděje. Poplatek 29&nbsp;Kč se ti vrací vždy, bez ohledu na to, kolikrát tě už někdo odmítl. Tvoje hodnocení se nemění.')}
-    else if(t.hasAttribute('data-hplat')){platbaHost(+t.getAttribute('data-hplat'))}
-    else if(t.hasAttribute('data-hzaplaceno')){var hi=+t.getAttribute('data-hzaplaceno');stav.moje[hi].zadost.plat=true;uloz();zapis('Zaplaceno 29 Kč: zobrazen profil hosta',0,-29);zavriModal();konfety();toast('Profil hosta je odemčený.');kresliMoje()}
-    else if(t.hasAttribute('data-hprij')){var pi=+t.getAttribute('data-hprij');stav.moje[pi].zadost.s='prijata';uloz();zapis('Přijal jsi hosta',0,0);toast('Přijato. Host dostane adresu a kód.');kresliMoje()}
+    else if(t.hasAttribute('data-hplat')){profilZadosti(+t.getAttribute('data-hplat'))}
+    else if(t.hasAttribute('data-hzaplaceno')){var hi=+t.getAttribute('data-hzaplaceno');stav.moje[hi].zadost.plat=true;uloz();zapis('Zaplaceno 29 Kč: zobrazen profil hosta',0,-29);konfety();toast('Profil hosta je odemčený.');kresliMoje();profilZadosti(hi)}
+    else if(t.hasAttribute('data-hprij')){var pi=+t.getAttribute('data-hprij');zavriModal();stav.moje[pi].zadost.s='prijata';uloz();zapis('Přijal jsi hosta',0,0);toast('Přijato. Host dostane adresu a kód.');kresliMoje()}
     else if(t.hasAttribute('data-hodm')){var di=+t.getAttribute('data-hodm'),dz=stav.moje[di].zadost,dv=dz.plat?odmitni('hostitel'):false;
       dz.s='odmitnuta';dz.txt=dz.plat?(dv?'Odmítnuto. Tvůj poplatek se vrací, hostovi také.':'Odmítnuto. Hostovi se poplatek vrací, tvůj se nevrací.'):'Odmítnuto bez zobrazení profilu. Hostovi se poplatek vrací.';uloz();zapis('Odmítl jsi hosta '+dz.jm+(dz.plat?(dv?': tvůj poplatek vrácen':': bez vrácení tvého poplatku'):''),dz.plat&&!dv?-5:0,dz.plat&&dv?29:0);kresliMoje();
       vysledek(dv||!dz.plat?'🙏':'🙈','Odmítnuto',dz.plat?(dv?'Odmítnutí bylo v tvých mezích. Vrací se ti 29&nbsp;Kč a hostovi taky.':'Překročil jsi počet odmítnutí s vrácením, tvůj poplatek se nevrací a ztrácíš 5 bodů. Hostovi se peníze vrací vždy.'):'Profil jsi nezobrazil, nic jsi neplatil. Hostovi se poplatek vrací vždy.')}
@@ -1128,9 +1215,9 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-papanito]'),functi
     else if(t.hasAttribute('data-fd')){stav.fdr=t.getAttribute('data-fd');var d=drinkPodleId(stav.fdr);$('#f-drink').value=d.n;$('#f-alko').value=d.alko?'1':'0';kresliFDr();nahled()}
     else if(t.hasAttribute('data-kdo')){var kd=t.getAttribute('data-kdo');stav.fil=JSON.parse(JSON.stringify(FIL0));if(kd==='dnes')stav.fil.kdy='dnes';else stav.fil.scn=kd;location.hash='#nabidky'}
     else if(t.hasAttribute('data-scn')){stav.fil=JSON.parse(JSON.stringify(FIL0));stav.fil.scn=t.getAttribute('data-scn');location.hash='#nabidky'}
-    else if(t.hasAttribute('data-odem')){platba(+t.getAttribute('data-odem'))}
-    else if(t.hasAttribute('data-zaplaceno')){var id=+t.getAttribute('data-zaplaceno');if(stav.odem.indexOf(id)<0)stav.odem.push(id);uloz();var zn2=NAB.filter(function(x){return x.id===id})[0];zapis('Zaplaceno 29 Kč: odemčen '+zn2.jm,0,-29);zavriModal();konfety();toast('Odemčeno. Fotka se zjasnila, můžeš zazvonit u dveří.');kresliNabidky();kresliMoje()}
-    else if(t.hasAttribute('data-poz')){stav.zvonil=true;stav.stavy[+t.getAttribute('data-poz')]='zvoneno';uloz();zapis('Zazvonil jsi u dveří',0,0);toast('Zazvonil jsi. Po přijetí dostaneš adresu a kód večera.');kresliNabidky();kresliMoje();}
+    else if(t.hasAttribute('data-odem')){profilHosta(+t.getAttribute('data-odem'))}
+    else if(t.hasAttribute('data-zaplaceno')){var id=+t.getAttribute('data-zaplaceno');if(stav.odem.indexOf(id)<0)stav.odem.push(id);uloz();var zn2=NAB.filter(function(x){return x.id===id})[0];zapis('Zaplaceno 29 Kč: odemčen '+zn2.jm,0,-29);profilHosta(id);konfety();toast('Odemčeno. Fotka se zjasnila, můžeš zazvonit u dveří.');kresliNabidky();kresliMoje()}
+    else if(t.hasAttribute('data-poz')){zavriModal();stav.zvonil=true;stav.stavy[+t.getAttribute('data-poz')]='zvoneno';uloz();zapis('Zazvonil jsi u dveří',0,0);toast('Zazvonil jsi. Po přijetí dostaneš adresu a kód večera.');kresliNabidky();kresliMoje();}
     else if(t.hasAttribute('data-ov')){var ko=t.getAttribute('data-ov');stav.overeno[ko]=true;uloz();kresliOver();kresliProfilBody();toast('Ověřeno (ukázka).');body(20,'ver_'+ko,null)}
     else if(t.hasAttribute('data-zavri')){zavriModal()}
   });
@@ -1167,22 +1254,30 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-papanito]'),functi
   $('#f-zrusit').addEventListener('click',function(){stav.fil=JSON.parse(JSON.stringify(FIL0));$('#f-q').value='';kresliFiltr();kresliNabidky()});
   nacti();
   $('#motiv-t').textContent=document.documentElement.getAttribute('data-motiv')==='tmavy'?'Světlý režim':'Tmavý režim';
-var hd=DRINKY[Math.floor(Math.random()*DRINKY.length)];
-  $('#hero-sklo').style.setProperty('--b1',hd.b);$('#hero-sklo').style.setProperty('--b2',hd.b2);
-  $('#hero-sklo').innerHTML='<span class="lahev">'+lahev(hd)+'</span><span class="proud"></span>'+sklenka(hd,96);
+var hd=DRINKY[Math.floor(Math.random()*DRINKY.length)],heroZnovu=function(){};
+  var RUKA='<span class="ruka" aria-hidden="true"><svg viewBox="0 0 40 34"><path d="M6 14c0-6 5-9 11-9h9c5 0 8 3 8 7v9c0 5-4 9-9 9H16c-6 0-10-5-10-10z" fill="#f2c9a5" stroke="#c99a74" stroke-width="1.5"/><path d="M12 12v8M18 11v9M24 11v9M30 12v8" stroke="#c99a74" stroke-width="1.4" stroke-linecap="round"/></svg></span>';
+  function kresliHero(d){
+    hd=d;var sc=$('#hero-sklo');sc.style.setProperty('--b1',d.b);sc.style.setProperty('--b2',d.b2);sc.classList.toggle('solo',d.id==='pivo');
+    sc.innerHTML='<span class="lahev">'+lahev(d)+RUKA+'</span><span class="proud"></span>'+sklenka(d,96);
+    heroZnovu();
+    $$('[data-hero]').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-hero')===d.id)});
+  }
+  $('#hero-vyber').innerHTML=['vino','koktejl','pivo','limo'].map(function(i){var d=drinkPodleId(i);return '<button type="button" class="chip" data-hero="'+i+'">'+(d.oz||'🍺')+' '+d.n+'</button>'}).join('');
+  $('#hero-vyber').addEventListener('click',function(e){var b=e.target.closest('[data-hero]');if(b)kresliHero(drinkPodleId(b.getAttribute('data-hero')))});
+  kresliHero(hd);
   $('#brana-sklo').innerHTML=sklenka({typ:'vino',b:'#ff8fb1',b2:'#d6336c',oz:'✨'},92);
   $('#logo-sklo').innerHTML=sklenka({typ:'kokt',b:'#ff9a6b',b2:'#d6336c'},30);
   /* Nalévání podle náklonu telefonu a tabletu, na počítači se nespouští. Při omezení pohybu zůstává jen klidná animace. */
   (function(){
     var sc=$('#hero-sklo');if(!sc||REDUKCE)return;
-    var lah=$('.lahev',sc),pr=$('.proud',sc),tek=$('.tek',sc),btn=$('#nakl-btn');
-    if(hd.id==='pivo')sc.classList.add('solo');
-    var y0=parseFloat(tek.style.getPropertyValue('--y'))||16,cil=0,pk=0,lev=0,zap=false,t0=0;
+    var lah,pr,tek,y0,btn=$('#nakl-btn'),cil=0,pk=0,lev=0,zap=false,t0=0;
+    function vazba(){lah=$('.lahev',sc);pr=$('.proud',sc);tek=$('.tek',sc);y0=parseFloat(tek.style.getPropertyValue('--y'))||16;lev=0}
+    vazba();heroZnovu=function(){vazba();if(!zap)return};
     function mez(x){return Math.max(0,Math.min(1,x))}
     function snimek(t){
       var dt=Math.min(.05,(t-t0)/1000||0);t0=t;pk+=(cil-pk)*.16;
       lev=mez(lev+(pk>.3?pk*dt*.4:-dt*.03));
-      lah.style.transform='translate('+(-8*(1-pk)).toFixed(1)+'px,'+(26*(1-pk)).toFixed(1)+'px) rotate('+(125*pk).toFixed(1)+'deg)';
+      if(!sc.classList.contains('solo'))lah.style.transform='translate('+(-8*(1-pk)).toFixed(1)+'px,'+(26*(1-pk)).toFixed(1)+'px) rotate('+(125*pk).toFixed(1)+'deg)';
       pr.style.opacity=(pk>.3&&lev<1)?.9:0;pr.style.transform='scaleY('+((pk>.3&&lev<1)?1:0)+')';
       tek.style.transform='translateY('+(64-(64-y0)*lev).toFixed(1)+'px)';
       requestAnimationFrame(snimek);
